@@ -82,7 +82,7 @@ function clearStorage(id?:string){
 }
 //Function for removing element from DOM
 function remove(id:string) {
-    (document.getElementById(id) as HTMLDivElement).remove()
+    (document.getElementById(id) as HTMLDivElement).remove();
 }
 //checking if resumename is valid
 const validateName = (name:string) => {
@@ -104,14 +104,7 @@ function copyText(id:string) {
     (document.getElementById('copiedLink')as HTMLSpanElement).innerHTML='copied!';
     
 }
-//resetting display
-function displayReset(){
-    formHeading.style.display='none',
-    (document.getElementById('resume-links')as HTMLDivElement).style.display = 'none';
-    (document.getElementById('shareLinkBox') as HTMLDivElement).style.display='none';
-    resumeDisplay.style.display = 'none';
-    resumeForm.style.display='none';
-}
+
 //function for sliding the bar
 function slideSidebar(){
     if(sidebar.style.translate==='0% 0%'){
@@ -220,6 +213,20 @@ function makeUser(id:string){
    }
    localStorage.setItem(userResume.id, JSON.stringify(userResume));
 }
+//resetting display
+function displayReset(){
+    (document.getElementById('resume-links')as HTMLDivElement).style.display = 'none';
+    (document.getElementById('shareLinkBox') as HTMLDivElement).style.display='none';
+    resumeDisplay.style.display = 'none';
+    resumeForm.style.display='none';
+    formHeading.style.display='none';
+};
+//reset function 
+function reset(){
+    setTimeout(()=>{
+        resetBtn.click();
+    },10) 
+}
 //function for populating side bar with storage resumes
 function populate(){
     resumeContainer.innerHTML=' ';
@@ -280,6 +287,12 @@ createResumeBtnHome.addEventListener('click',()=>{
 })
 //Making a new resume layout when clicking on new resume
 createResumeBtn.addEventListener('click',()=>{
+    for(let i=0;i<resumeContainer.children.length;i++){
+        if(resumeContainer.children[i].getAttribute('type')){
+            alert('Can not make a new Resume while you have an unsaved one.');
+            return;
+        }
+    }
     let resumeName=prompt('Enter the Resume Name.\nNo Special Charcters or spaces allowed.\nShould be between 5-15 Characters')?.trim()
     if(!resumeName)return;
     resumeName=resumeName.split(' ').join('-')
@@ -298,13 +311,17 @@ createResumeBtn.addEventListener('click',()=>{
         };
     };
     let div=document.createElement('div');
+    div.setAttribute('type','unsaved')
     div.id=resumeName;
     div.onclick=()=>{
         getResumeForm(resumeName);
     }
     div.className="listItems";
     div.innerHTML=`<p>${resumeName}</p>
-                    <button onclick="(()=>remove('${resumeName}'))()"><i class="fa-solid fa-trash"></i></button>`;
+                    <button onclick="(()=>{
+                    reset();
+                    remove('${resumeName}');
+                    })()"><i class="fa-solid fa-trash"></i></button>`;
     resumeContainer.appendChild(div);
     div.click()
 })
