@@ -101,7 +101,7 @@ function copyText(id:string) {
   
      // Copy the text inside the text field
     navigator.clipboard.writeText(copyText.value);
-    (document.getElementById('copiedLink')as HTMLSpanElement).innerHTML='copied';
+    (document.getElementById('copiedLink')as HTMLSpanElement).innerHTML='copied!';
     
 }
 //resetting display

@@ -82,7 +82,7 @@ function copyText(id) {
     copyText.setSelectionRange(0, 99999); // For mobile devices
     // Copy the text inside the text field
     navigator.clipboard.writeText(copyText.value);
-    document.getElementById('copiedLink').innerHTML = 'copied';
+    document.getElementById('copiedLink').innerHTML = 'copied!';
 }
 //resetting display
 function displayReset() {
