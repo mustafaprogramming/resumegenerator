@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/561ee7c136.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../styles.css">
+    <title>Your Resumes</title>
+    <style>
+        .error-box{
+            user-select: none;
+            width: fit-content;
+            padding: 30px 20px;
+            display: flex;
+            align-items: center;
+            margin: 40vh auto;
+            background-color: #6f5ab282;
+            color: #6b44ea;
+            letter-spacing: -2px;
+            word-spacing: 5px;
+            font-size: 2.5rem;
+            border-radius: 10px;
+            border: 2px #6b44ea solid;
+            box-shadow: 10px 20px 10px #6b44ea;
+            }
+    </style>
+</head>
+<body>
+    <header>
+        <div id="logo">Your Resume <span id="resumeId" style="color: rgb(234, 156, 255);font-size: 2rem;"></span></div>
+        <button id="copylink" class="Btn" style="margin-left: 10px;font-size: 1.5rem; color: white; background: transparent;border: 0;"><i class="fa-regular fa-copy"></i></button>
+    </header>
+    <div class="container" >
+        <!-- Generated Resume Display -->
+        <section id="resumeDisplay" class="resume" style="display: block;">
+            
+            <div class="displayheader">
+                <p id="displayName" contenteditable="false">name</p>
+            </div>
+            <main class="mainresumesection">
+                <!-- Skills -->
+            <div class="display-input-group">
+                <h4 >>&nbsp;Skills:</h4>
+                <p id="displaySkills" contenteditable="false"></p>
+            </div>
+            <!-- Status -->
+            <div class="display-input-group">
+                <h4 >>&nbsp;Status:</h4>
+                <p id="displayStatus" contenteditable="false"></p>
+            </div>
+            <!-- Activities -->
+            <div class="display-input-group">
+                <h4 >>&nbsp;Activities:</h4>
+                <p id="displayActivities" contenteditable="false"></p>
+            </div>
+
+            <!-- credentials -->
+            <div class="display-credentials">
+                <p id="displayEmail" contenteditable="false"></p>
+                <p id="displayPhone" contenteditable="false"></p>
+                <p id="displayLocation" contenteditable="false"></p>
+                <p id="displayLinkedin" contenteditable="false"></p>
+            </div>
+            <!-- summary -->
+            <h4>>&nbsp;Summary</h4>
+            <p id="displaySummary" contenteditable="false">
+                
+            </p>
+            <!-- Education -->
+            <h4>>&nbsp;Education</h4>
+            <div id="displayEducationBox">
+                
+            </div>
+            
+            <!-- Work Experience -->
+            <h4>>&nbsp;Experience</h4>
+            <div id="displayExperienceBox">
+                
+            </div>
+        </main>
+        </section>
+        <button id="downloadPDF" class="Btn" style="width: 100%;">Download PDF</button>
+    </div>
+    <!-- Section for download and sharable Link -->
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+    <script> 
+         //copying url
+         document.getElementById('copylink').addEventListener('click',()=>{
+          navigator.clipboard.writeText(window.location.href)
+          alert('URL Copied')
+         })
+         // generation pdf with resume name when clicking download pdf
+        function generatePDF(element,name) {
+            // Pass options to html2pdf
+            let opt = {
+                margin:       1,
+                filename:     `${name}.pdf`,  // Set your custom file name here
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2 },
+                jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+
+            // Generate the PDF
+            html2pdf().from(element).set(opt).save();
+        }
+        document.getElementById('downloadPDF').addEventListener('click', () => {
+        const element = document.getElementById('resumeDisplay');
+        let name=element.getAttribute('resumeFor')
+            generatePDF(element,name)
+        });
+        //setting display form
+        function settingForm(resumeData){
+         document.getElementById('displayName').innerHTML=resumeData.name;
+         document.getElementById('displayEmail').innerHTML=resumeData.email;
+         document.getElementById('displayPhone').innerHTML=resumeData.phone;
+         document.getElementById('displayLocation').innerHTML=resumeData.location;
+         document.getElementById('displayLinkedin').innerHTML=resumeData.linkedin;
+         document.getElementById('displayStatus').innerHTML=resumeData.status;
+         document.getElementById('displaySkills').innerHTML=resumeData.skills;
+         document.getElementById('displaySummary').innerHTML=resumeData.activity;
+         document.getElementById('displayActivities').innerHTML=resumeData.summary;
+         document.getElementById('displayEducationBox').innerHTML=resumeData.education;
+         document.getElementById('displayExperienceBox').innerHTML=resumeData.experience;
+        };
+        //setting up dynamic form loading
+        window.addEventListener('DOMContentLoaded', () => {
+         const urlParams = new URLSearchParams(window.location.search);
+         const key = urlParams.get('resume');
+         if (key) {
+             // Autofill form if data is found in localStorage
+             const savedResumeData = localStorage.getItem(key);
+
+             if (savedResumeData) {
+                const resumeDisplay=document.getElementById('resumeDisplay')
+                const resumeData = JSON.parse(savedResumeData);
+                resumeDisplay.setAttribute('resumeFor',`${resumeData.id}`);
+                document.getElementById('resumeId').innerHTML=`${resumeData.id}`;
+                document.title=`${resumeData.id}`;
+                settingForm(resumeData)
+             }else{
+            document.querySelector('body').innerHTML=`<div class="error-box">
+                                                        Resume Not Found
+                                                      </div>`
+         }
+         }else{
+            document.querySelector('body').innerHTML=`<div class="error-box">
+                                                        Resume Not Found
+                                                      </div>`
+         }
+        });
+    </script>
+</body>
+</html>

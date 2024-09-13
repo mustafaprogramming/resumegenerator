@@ -3,16 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/561ee7c136.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./styles.css">
     <title>Resume Maker</title>
 </head>
 <body>
     <header>
         <div id="logo">Resume Maker</div>
+        <h6 id="slogan">Create Your ATS Friendly Resume</h6>
+        <button id="showSideBar"><i class="fa-solid fa-bars"></i></button>
+        <aside id="sidebar">
+            <button id="createNewResume"  style="width: 100%;">Create New +</button>
+            <hr style="margin: 10px 0px;opacity: 0.5;">
+            
+            <section id="userResumes" style="flex: 1;">
+                
+            </section>
+            
+            <hr style="margin: 20px 0px;opacity: 0.5;">
+            <button onclick="(clearStorage)()" class="Btn deleteBtn" style="width: 100%;">Delete All</button>
+        </aside>
     </header>
-    <div class="container">
-        <form id="resumeForm">
-            <h2>Create Your Resume</h2>
+    <div class="container" >
+        <button id="createNewResumeHome" class="Btn" style="width: 100%;">Create New +</button>
+        <h2 id="formHeading"></h2>
+        <button id="resetBtn" class="Btn" type="button">-</button>
+        <!-- Input For Resume -->
+        <form id="resumeForm" Username="" style="display: none;">
+            
             <!-- Personal Information -->
             <label for="name">Full Name</label>
             <input type="text" id="name" name="name" placeholder="Your full name" required>
@@ -45,14 +63,7 @@
                 <button class="addBtn Btn" id="addEducationBtn" type="button">+</button>
             </div>
             <section id="education-box">
-                <div class="definedInput">
-                    <span>Enter your Education</span>
-                    <input type="text" required>
-                    <span>Enter place of Education</span>
-                    <input type="text" required>
-                    <span>Enter your Education discription</span>
-                    <textarea rows="4"  placeholder="List your education discription" required></textarea>
-                </div>
+                
             </section>
 
             <!-- Work Experience -->
@@ -61,16 +72,7 @@
                  <button class="addBtn Btn" id="addExperienceBtn" type="button">+</button>
              </div>
             <section id="experience-box">
-                <div class="definedInput">
-                    <span>Enter Starting and ending date of your Work</span>
-                    <div class="date"><input type="text" required>&nbsp;<input type="text" required></div>
-                    <span>Enter your Work</span>
-                    <input type="text" required>
-                    <span>Enter place of Work</span>
-                    <input type="text" required>
-                    <span>Enter your Work discription</span>
-                    <textarea rows="4" placeholder="List your work experience" required></textarea>
-                </div>
+                
                 
             </section>
 
@@ -78,38 +80,38 @@
             <input type="submit" value="Generate Resume">
         </form>
         <!-- Generated Resume Display -->
-        <section id="resumeDisplay" class="resume">
+        <section id="resumeDisplay" class="resume" >
             
             <div class="displayheader">
-                <p id="displayName" contenteditable="true"></p>
+                <p id="displayName" contenteditable="false">name</p>
             </div>
             <main class="mainresumesection">
                 <!-- Skills -->
             <div class="display-input-group">
-                <h4>>&nbsp;Skills:</h4>
-                <p id="displaySkills" contenteditable="true"></p>
+                <h4 >>&nbsp;Skills:</h4>
+                <p id="displaySkills" contenteditable="false"></p>
             </div>
             <!-- Status -->
             <div class="display-input-group">
-                <h4>>&nbsp;Status:</h4>
-                <p id="displayStatus" contenteditable="true"></p>
+                <h4 >>&nbsp;Status:</h4>
+                <p id="displayStatus" contenteditable="false"></p>
             </div>
             <!-- Activities -->
             <div class="display-input-group">
-                <h4>>&nbsp;Activities:</h4>
-                <p id="displayActivities" contenteditable="true"></p>
+                <h4 >>&nbsp;Activities:</h4>
+                <p id="displayActivities" contenteditable="false"></p>
             </div>
 
             <!-- credentials -->
             <div class="display-credentials">
-                <p id="displayEmail" contenteditable="true"></p>
-                <p id="displayPhone" contenteditable="true"></p>
-                <p id="displayLocation" contenteditable="true"></p>
-                <p id="displayLinkedin" contenteditable="true"></p>
+                <p id="displayEmail" contenteditable="false"></p>
+                <p id="displayPhone" contenteditable="false"></p>
+                <p id="displayLocation" contenteditable="false"></p>
+                <p id="displayLinkedin" contenteditable="false"></p>
             </div>
             <!-- summary -->
             <h4>>&nbsp;Summary</h4>
-            <p id="displaySummary" contenteditable="true">
+            <p id="displaySummary" contenteditable="false">
                 
             </p>
             <!-- Education -->
@@ -124,17 +126,48 @@
                 
             </div>
         </main>
+        <button class="Btn" id="saveResume" style="display: none;">Save</button>
         </section>
     </div>
-    <div id="resume-links"><button id="downloadPDF" class="Btn pdfBtn">Download PDF</button><button class="Btn sharingBtn">Share</button></div>
+    <!-- Section for download and sharable Link -->
+     <section id="link-download-Box">
+         <div id="resume-links">
+             <button id="downloadPDF" class="Btn">Download PDF</button>
+             <button class="Btn" id="editResume">Edit</button>
+             <button id="sharePDF" class="Btn" style="background-color: #5db25a;">Get Link</button>
+         </div>
+         <a id="shareLinkBoxlink" href="#shareLinkBox" style="display: none;"></a>
+         <div id="shareLinkBox" style="display: none;">
+             <a href="#" target="_blank" id="shareLink"></a>
+             <input id="copyText" type="text" style="display: none;">
+             <button id="copyBtn" class="btn tooltip" style="border-radius: 10px;margin-left: 10px;">Copy<span id="copiedLink" class="tooltiptext "></span></button>
+         </div>
+     </section>
 
-    <script src="./main.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.0/html2pdf.bundle.min.js" integrity="sha512-w3u9q/DeneCSwUDjhiMNibTRh/1i/gScBVp2imNVAMCt6cUHIw6xzhzcPFIaL3Q1EbI2l+nu17q2aLJJLo4ZYg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script>
-        document.getElementById('downloadPDF').addEventListener('click',()=>{
-        let resume=(document.getElementById('resumeDisplay'));
-        html2pdf(resume)
-        })
+    <script src="./build/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+
+    
+    <script> 
+    // generation pdf with resume name when clicking download pdf
+        function generatePDF(element,name) {
+            // Pass options to html2pdf
+            let opt = {
+                margin:       1,
+                filename:     `${name}.pdf`,  // Set your custom file name here
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2 },
+                jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+
+            // Generate the PDF
+            html2pdf().from(element).set(opt).save();
+        }
+        document.getElementById('downloadPDF').addEventListener('click', () => {
+        const element = document.getElementById('resumeDisplay');
+        let name=element.getAttribute('resumeFor')
+            generatePDF(element,name)
+        });
     </script>
 </body>
 </html>

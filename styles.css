@@ -5,36 +5,33 @@
  box-sizing: border-box;
  font-family: Arial, Helvetica, sans-serif;
 }
-
+/* Scrolllbar Styles */
+::-webkit-scrollbar {
+  width: 15px;
+}
+::-webkit-scrollbar-track {
+  background: #424242;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background: #6f5ab2;
+  border: 3px solid #424242;
+}
+/* Body styles */
 body {
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
 }
-header{
-  display: flex;
-  align-items: center;
-  height: 10vh;
-  width: 100%;
-  background: #6f5ab2;
-  color: #fff;
-  position: fixed;
-  z-index: 100;
-  top: 0;
+button{
+  user-select: none;
 }
-#logo{
-  font-size: 2rem;
-  margin-left: 5%;
-  letter-spacing: -0.5px;
+h2, h3 {
+  text-align: center;
 }
-.container {
-  max-width: 600px;
-  margin: 0 auto;
-  margin-top: 10%;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+span{
+  font-size: 12px;
 }
+/* General Input Styles */
 label {
   display: block;
   font-size: 10px;
@@ -59,68 +56,209 @@ input[type="submit"] {
 input[type="submit"]:hover {
   background-color: #8267dc;
 }
-#resume-links{
-  display: none;
-  justify-content: space-evenly;
-  width: 300px;
-  margin: 20px auto;
-}
-
-.Btn{
+/* Unversal Btn class styling */
+.btn,.Btn{
   margin-right: 10px;
   color: #fff;
-  display: flex;
-  align-items: center;
   border: none;
-  padding: 0px 10px;
+  padding: 10px;
   border-radius: 5px;
   font-size: 1.2rem;
+  background-color: #6F5AB2;
+  font-size: 13px;
+}
+.Btn:hover,.removeBtn:hover{
+  opacity: 0.5;
+}
+.Btn:active,.removeBtn:active{
+  opacity: 1;
+}
+/* Styling for Tooltip */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  text-wrap: nowrap;
+  width: fit-content;
+  background-color: #fff;
+  color: #6f5ab2;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 10px;
+  position: absolute;
+  z-index: 1;
+  top: 0%;
+  left: 50%;
+  translate: -50% -120%;
+  opacity: 0;
+  transition: opacity 0.3s;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #fff transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+/* General Settings end */
+/* header styles start*/
+header{
+  user-select: none;
+  display: flex;
+  padding: 0 30px;
+  align-items: center;
+  height: 10vh;
+  width: 100%;
+  background: #6f5ab2;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  position: fixed;
+  z-index: 100;
+  top: 0;
+}
+/* logo style */
+#logo{
+  font-size: 1.8rem;
+  margin-left: 5%;
+  letter-spacing: -0.5px;
+}
+/* Slogan style */
+#slogan{
+  margin: 0px auto 0px 25%;
+}
+/* Style for showing sidebar button */
+#showSideBar{
+  background: transparent;
+  padding: 0px 10px;
+  border-radius: 5px;
+  border: 2px solid #fff;
+  font-size: 2rem;
+  color: #fff;
+}
+#showSideBar:hover{
+  opacity: 0.5;
+}
+#showSideBar:active{
+  opacity: 1;
+}
+/* header styles end*/
+/* Sidebar styles start*/
+#sidebar{
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width: 220px;
+  height: 90vh;
+  padding: 10px 5px;
+  position: fixed;
+  top: 10vh;
+  left: 0;
+  translate: -100% 0%;
+  background-color: #6E6E6E;
+  color: #fff;
+  transition: all 0.5s;
+}
+/* Style for the items in sidebar */
+.listItems{
+  border: 2px #fff solid;
+  border-radius: 5px;
+  margin: 10px 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px;
+  button{
+    background: transparent;
+    border: 0;
+    color: #fe7878;
+  }
+  button:hover{
+    opacity: 0.5;
+  }
+  button:active{
+    opacity: 1;
+  }
+}
+.listItems:hover{
+  border-radius: 20px;
+  border-color: #A9FDAC;
+}
+/* Styling for the buttons for creating new resumes */
+#createNewResumeHome,#createNewResume{
+  color: #fff;
+  background-color: transparent;
+  padding: 5px;
+  border: #fff solid 2px;
+  border-radius: 5px;
+}
+#createNewResume:hover{
+  border-color: #7e57ff;
+}
+#createNewResume:active{
+  border-color: #9757ff;
+}
+#createNewResumeHome{
+  font-size: 1.2rem;
+  color: #6f5ab2;
+  border: #6f5ab2 solid 2px;
+}
+/* Sidebar styles End*/
+/* Styles for the container containing the form and resume */
+.container {
+  position: relative;
+  user-select: none;
+  max-width: 600px;
+  margin: 15vh 5% 0 30%;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Input form Style start */
+#formHeading{
+  
+  color: #6f5ab2;
 }
 .addBtn{
   background-color: #6F5AB2;
+  padding: 0px 10px;
   float: inline-end;
   position: relative;
   z-index: 10;
 }
 .removeBtn{
-  background-color:#ff2929;
+  background-color: #fe7878;
   position: absolute;
+  padding: 0px 10px;
   top: 2%;
   right: 0%;
   z-index: 10;
 }
-.pdfBtn{
-  padding: 10px;
-  font-size: 10px;
-  background-color: #6F5AB2;
+/* style for reset btn */
+#resetBtn{
+  display: none;
+  position: absolute;
+  background-color:#fe7878;
+  top: 10px;
+  right: 2px;
+  padding: 0px 10px;
 }
-.sharingBtn{
-  padding: 5px 10px;
-  font-size: 10px;
-  background-color: #5db25a;
-}
-.addBtn:hover,.removeBtn:hover{
-  opacity: 0.5;
-}
-.addBtn:active,.removeBtn:active{
-  opacity: 1;
-}
-h2, h3 {
-  text-align: center;
-}
-span{
-  font-size: 12px;
-}
-.resume {
-  background-color: #f9f9f9;
-  padding: 20px;
-  margin-top: 30px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
-.resume h3 {
-  margin-bottom: 10px;
-}
+/* Styles for education and experience input in form */
 .definedInput{
   position: relative;
   margin-top: 10px;
@@ -128,6 +266,7 @@ span{
   border-radius: 10px;
   padding: 10px 15px;
 }
+/* Date setting for both display and input form */
 .date{
   display: flex;
   align-items: center;
@@ -137,19 +276,24 @@ span{
     max-width: 100px;
   }
 }
-#resumeDisplay{
+/* Input form Style end */
+
+/* Resume Display Style start */
+.resume {
   display: none;
+  padding: 20px;
+  margin-top: 30px;
   background: #fff;
-  padding: 0;
   color: #5A5978;
-  border: 0;
 }
+/* Display resume Header style */
 .displayheader{
   color: #ffffff;
   font-size: 2rem;
   text-align: center;
   background-color: #6E6E6E;
 }
+/* Display resume main style */
 .mainresumesection{
   margin: 10px 40px;
   > h4{
@@ -160,6 +304,7 @@ span{
     background-color: #5A5978;
   }
 }
+/* display Input group styles */
 .display-input-group{
   display: flex;
   align-items: baseline;
@@ -172,6 +317,7 @@ span{
     padding: 5px;
   }
 }
+/* Styles for how the cridentials in display form appear */
 .display-credentials{
   display: flex;
   flex-wrap: wrap;
@@ -180,7 +326,7 @@ span{
   font-size: 12px;
   color: #0056b3;
 }
-
+/* Styles for the display summary,education,experience */
 #displaySummary{
   margin-top: 10px;
   font-size: 14px;
@@ -205,5 +351,62 @@ span{
   p{
     margin-top: 5px;
     font-size: 14px;
+  }
+}
+/* Resume Display Style End */
+
+/* pdf link and edit button container */
+#link-download-Box{
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2vh 5% 5vh 30%;
+}
+#resume-links{
+  user-select: none;
+  display: none;
+  justify-content: space-evenly;
+  width: 300px;
+  margin: 20px 0;
+}
+/* Generated link styles*/
+#shareLink{
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  font-size: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.498);
+  border-radius: 10px;
+  color: #6F5AB2;
+  text-decoration: none;
+}
+#shareLink:hover{
+  text-decoration: underline;
+}
+
+/* MAking the site responsive */
+@media Only screen and (max-width:920px) {
+  .container{
+    margin: 15vh auto 0 auto;
+  }
+  #link-download-Box{
+    margin: 2vh auto 5vh auto;
+  }
+}
+@media Only screen and (max-width:728px) {
+#logo{
+  margin: 0 auto 0 5%;
+}
+#slogan{
+  margin: 0 auto;
+}
+}
+@media Only screen and (max-width:600px) {
+  #logo{
+    font-size: 1.3rem;
+  }
+  #slogan{
+    display: none;
   }
 }
