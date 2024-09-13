@@ -238,11 +238,9 @@ header{
   background-color: #6F5AB2;
   padding: 0px 10px;
   float: inline-end;
-  position: relative;
-  z-index: 10;
 }
 .removeBtn{
-  background-color: #fe7878;
+  background-color: #ff5a5a;
   position: absolute;
   padding: 0px 10px;
   top: 2%;

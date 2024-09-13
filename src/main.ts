@@ -72,10 +72,12 @@ function clearStorage(id?:string){
         localStorage.removeItem(id)
         setStorage()
         populate()
+        resetBtn.click()
     }else{
         localStorage.clear()
         setStorage()
         populate()
+        resetBtn.click()
     }
 }
 //Function for removing element from DOM
