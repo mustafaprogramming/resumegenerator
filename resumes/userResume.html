@@ -53,7 +53,10 @@
                 <h4 >>&nbsp;Activities:</h4>
                 <p id="displayActivities" contenteditable="false"></p>
             </div>
-
+            <!-- custom entries -->
+            <div id="resumeCustomEntries">
+                        
+            </div>
             <!-- credentials -->
             <div class="display-credentials">
                 <p id="displayEmail" contenteditable="false"></p>
@@ -118,8 +121,9 @@
          document.getElementById('displayLinkedin').innerHTML=resumeData.linkedin;
          document.getElementById('displayStatus').innerHTML=resumeData.status;
          document.getElementById('displaySkills').innerHTML=resumeData.skills;
-         document.getElementById('displaySummary').innerHTML=resumeData.activity;
-         document.getElementById('displayActivities').innerHTML=resumeData.summary;
+         document.getElementById('resumeCustomEntries').innerHTML=resumeData.customEntries;
+         document.getElementById('displaySummary').innerHTML=resumeData.summary;
+         document.getElementById('displayActivities').innerHTML=resumeData.activity;
          document.getElementById('displayEducationBox').innerHTML=resumeData.education;
          document.getElementById('displayExperienceBox').innerHTML=resumeData.experience;
         };

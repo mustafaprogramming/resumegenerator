@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/561ee7c136.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./styles.css">
+    <link REL="ICON" HREF="./logo.png">
     <title>Resume Maker</title>
 </head>
 <body>
@@ -54,6 +55,16 @@
             <!-- activities -->
             <label for="activities">activities</label>
             <input type="text" id="activities" name="activities"  placeholder="List your activities" required>
+            <!-- Custom entries -->
+            <div>
+                <h4>Add custom entries (optional)<button class="addBtn Btn" id="addEntriesBtn" type="button">+</button></h4>
+            </div>
+            <section id="custom-entry-box">
+                <div class="definedInput customeEntry">
+                    <input class="customeField" placeholder="Entry Name" type="text">
+                    <input placeholder="Entry Value" class="customFieldValue" type="text">
+                </div>
+            </section>
             <!-- summary -->
             <label for="resume-summary">Summary</label>
             <textarea id="resume-summary" name="resume-summary"  placeholder="Tell about Yourself" required></textarea>
@@ -86,20 +97,24 @@
             </div>
             <main class="mainresumesection">
                 <!-- Skills -->
-            <div class="display-input-group">
-                <h4 >>&nbsp;Skills:</h4>
-                <p id="displaySkills" contenteditable="false"></p>
-            </div>
-            <!-- Status -->
-            <div class="display-input-group">
-                <h4 >>&nbsp;Status:</h4>
-                <p id="displayStatus" contenteditable="false"></p>
-            </div>
-            <!-- Activities -->
-            <div class="display-input-group">
-                <h4 >>&nbsp;Activities:</h4>
-                <p id="displayActivities" contenteditable="false"></p>
-            </div>
+                <div class="display-input-group">
+                    <h4 >>&nbsp;Skills:</h4>
+                    <p id="displaySkills" contenteditable="false"></p>
+                </div>
+                <!-- Status -->
+                <div class="display-input-group">
+                    <h4 >>&nbsp;Status:</h4>
+                    <p id="displayStatus" contenteditable="false"></p>
+                </div>
+                     <!-- Activities -->
+                <div class="display-input-group">
+                    <h4 >>&nbsp;Activities:</h4>
+                    <p id="displayActivities" contenteditable="false"></p>
+                </div>
+                <!-- custom entries -->
+                <div id="resumeCustomEntries">
+                        
+                </div>
 
             <!-- credentials -->
             <div class="display-credentials">

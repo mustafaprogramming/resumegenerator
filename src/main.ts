@@ -9,6 +9,7 @@ type resumeObj ={
     status:string,
     skills:string,
     activity:string,
+    customEntries:string;
     summary:string,
     education:string,
     experience:string
@@ -33,6 +34,7 @@ const displayStatus=(document.getElementById('displayStatus') as HTMLParagraphEl
 const displaySkills=(document.getElementById('displaySkills') as HTMLParagraphElement);
 const summary=(document.getElementById('displaySummary') as HTMLParagraphElement);
 const displayActiviy=(document.getElementById('displayActivities') as HTMLParagraphElement);
+const resumeCustomEntries=(document.getElementById('resumeCustomEntries') as HTMLDivElement);
 const displayEducationBox=(document.getElementById('displayEducationBox') as HTMLDivElement);
 const displayExperienceBox=(document.getElementById('displayExperienceBox') as HTMLDivElement);
 const formHeading=(document.getElementById('formHeading') as HTMLHeadingElement)
@@ -74,15 +76,22 @@ function clearStorage(id?:string){
         populate()
         resetBtn.click()
     }else{
-        localStorage.clear()
-        setStorage()
-        populate()
-        resetBtn.click()
+        let answer=confirm(`Are you sure you want to delete All Resumes?`);
+        if(answer){
+            localStorage.clear()
+            setStorage()
+            populate()
+            resetBtn.click()
+        }           
     }
 }
 //Function for removing element from DOM
 function remove(id:string) {
-    (document.getElementById(id) as HTMLDivElement).remove();
+    let answer=confirm(`Are you sure you want to delete ${id}?`);
+    if(answer){
+        (document.getElementById(id) as HTMLDivElement).remove();
+    }
+    return answer
 }
 //checking if resumename is valid
 const validateName = (name:string) => {
@@ -154,15 +163,21 @@ function setInputForm(){
                    <textarea rows="4"  placeholder="List your education discription" required></textarea>
                </div>`;
     (document.getElementById('experience-box') as HTMLDivElement).innerHTML=`<div class="definedInput">
-                   <span>Enter Starting and ending date of your Work</span>
-                   <div class="date"><input type="text" required>&nbsp;<input type="text" required></div>
-                   <span>Enter your Work</span>
-                   <input type="text" required>
-                   <span>Enter place of Work</span>
-                   <input type="text" required>
-                   <span>Enter your Work discription</span>
-                   <textarea rows="4" placeholder="List your work experience" required></textarea>
-               </div>`;
+               <span>Enter Starting and ending date of your Work</span>
+               <div class="date"><input type="text" required>&nbsp;<input type="text" required></div>
+               <span>Enter your Work</span>
+               <input type="text" required>
+               <span>Enter place of Work</span>
+               <input type="text" required>
+               <span>Enter your Work discription</span>
+               <textarea rows="4" placeholder="List your work experience" required></textarea>
+           </div>`;
+    (document.getElementById('custom-entry-box') as HTMLDivElement).innerHTML=`
+                <div class="definedInput customeEntry">
+                    <input class="customeField" placeholder="Entry Name" type="text">
+                    <input placeholder="Entry Value" class="customFieldValue" type="text">
+                </div>
+    `;
 }
 //Getting new form layout for the selected form
 function getResumeForm(resumeName:string){
@@ -191,6 +206,7 @@ function settingForm(resumeData:resumeObj){
    displayStatus.innerHTML=resumeData.status;
    displaySkills.innerHTML=resumeData.skills;
    displayActiviy.innerHTML=resumeData.activity;
+   resumeCustomEntries.innerHTML=resumeData.customEntries;
    summary.innerHTML=resumeData.summary;
    displayEducationBox.innerHTML=resumeData.education;
    displayExperienceBox.innerHTML=resumeData.experience;
@@ -207,6 +223,7 @@ function makeUser(id:string){
        status:displayStatus.innerHTML,
        skills:displaySkills.innerHTML,
        activity:displayActiviy.innerHTML,
+       customEntries:resumeCustomEntries.innerHTML,
        summary:summary.innerHTML,
        education:displayEducationBox.innerHTML,
        experience:displayExperienceBox.innerHTML
@@ -222,7 +239,9 @@ function displayReset(){
     formHeading.style.display='none';
 };
 //reset function 
-function reset(){
+function reset(resumeName:string){
+    let done=remove(resumeName);
+    if(!done)return;
     setTimeout(()=>{
         resetBtn.click();
     },10) 
@@ -257,7 +276,9 @@ function populate(){
         div.className="listItems";
         div.innerHTML=`<p>${resumeName}</p>
                         <button onclick="(()=>{
-                        remove('${resumeName}');
+                        let done=remove('${resumeName}');
+                        console.log(done)
+                        if(!done)return;
                         clearStorage('${resumeName}');
                         })()"><i class="fa-solid fa-trash"></i></button>`;
         resumeContainer.appendChild(div);
@@ -293,7 +314,7 @@ createResumeBtn.addEventListener('click',()=>{
             return;
         }
     }
-    let resumeName=prompt('Enter the Resume Name.\nNo Special Charcters or spaces allowed.\nShould be between 5-15 Characters')?.trim()
+    let resumeName=prompt('Enter the Resume Name.\nNo Special Charcters or spaces allowed.\nShould be between 5-15 Characters')?.trim()as string;
     if(!resumeName)return;
     resumeName=resumeName.split(' ').join('-')
     if(resumeName.length<5 || resumeName.length>15){
@@ -319,8 +340,7 @@ createResumeBtn.addEventListener('click',()=>{
     div.className="listItems";
     div.innerHTML=`<p>${resumeName}</p>
                     <button onclick="(()=>{
-                    reset();
-                    remove('${resumeName}');
+                        reset('${resumeName}');
                     })()"><i class="fa-solid fa-trash"></i></button>`;
     resumeContainer.appendChild(div);
     div.click()
@@ -341,6 +361,7 @@ resumeForm.addEventListener('submit', function(event) {
  const inputsummary = (document.getElementById('resume-summary') as HTMLTextAreaElement).value;
  const educationBox = (document.getElementById('education-box') as HTMLDivElement);
  const experienceBox = (document.getElementById('experience-box') as HTMLDivElement);
+ const customEntryBox = (document.getElementById('custom-entry-box') as HTMLDivElement);
  displayName.innerHTML=inputName;
  displayEmail.innerHTML=inputEmail;
  displayPhone.innerHTML=inputPhone;
@@ -352,6 +373,20 @@ resumeForm.addEventListener('submit', function(event) {
  summary.innerHTML=inputsummary;
  let displayEducationDataArray:string[]=[]
  let displayExperienceDataArray:string[]=[]
+ let resumeCustomEntriesArray:string[]=[]
+
+ for(let i=0;i<customEntryBox.children.length;i++){
+    let customEntryName=(customEntryBox.children[i].children[0] as HTMLInputElement).value.trim();
+    if(customEntryName){
+        let customEntryValue=(customEntryBox.children[i].children[1] as HTMLInputElement).value;
+        resumeCustomEntriesArray.push(`<div class="display-input-group">
+                    <h4 contenteditable="false">>&nbsp;${customEntryName}</h4>
+                        <p id="hfh" contenteditable="false">${customEntryValue}</p>
+                    </div>`);
+    };
+}
+
+
  for(let i=0;i<educationBox.children.length;i++){
   let eduactionBoxName=(educationBox.children[i].children[1] as HTMLInputElement).value;
   let eduactionBoxPlace=(educationBox.children[i].children[3] as HTMLInputElement).value;
@@ -390,7 +425,7 @@ resumeForm.addEventListener('submit', function(event) {
  }
  displayEducationBox.innerHTML=displayEducationDataArray.join('');
  displayExperienceBox.innerHTML=displayExperienceDataArray.join('');
-
+ resumeCustomEntries.innerHTML=resumeCustomEntriesArray.join('');
  //make userResume
     resumeDisplay.setAttribute('resumeFor',`${username}`);
     let id=resumeDisplay.getAttribute('resumeFor');
@@ -422,7 +457,7 @@ resumeForm.addEventListener('submit', function(event) {
                 `;
   educationBox.appendChild(div)
 });
-//making more Experience feilds in input form dynamically
+//making more Experience feilds in input form dynamically addEntriesBtn
 (document.getElementById('addExperienceBtn') as HTMLButtonElement).addEventListener('click',()=>{
  const experienceBox = (document.getElementById('experience-box') as HTMLDivElement);
   let div=document.createElement('div');
@@ -440,6 +475,17 @@ resumeForm.addEventListener('submit', function(event) {
                   <button class="removeBtn Btn" type="button" onclick="(() => remove('removeExp'+${experienceBox.children.length}))()">-</button>
                 </div>`;
    experienceBox.appendChild(div)
+});
+//making custome entries on click
+(document.getElementById('addEntriesBtn') as HTMLButtonElement).addEventListener('click',()=>{
+    const customEntryBox = (document.getElementById('custom-entry-box') as HTMLDivElement);
+    let div=document.createElement('div');
+    div.id='removeEnt' + customEntryBox.children.length;
+    div.className="definedInput customeEntry";
+    div.innerHTML= `<input class="customeField" placeholder="Entry Name" type="text">
+                    <input placeholder="Entry Value" class="customFieldValue" type="text">
+                    <button class="removeBtn Btn" type="button" onclick="(() => remove('removeEnt'+${customEntryBox.children.length}))()">-</button>`;
+    customEntryBox.appendChild(div)
 });
 //Making a sharable link on get link button click
 shareBtn.addEventListener('click',()=>{
