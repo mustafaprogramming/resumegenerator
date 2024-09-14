@@ -296,77 +296,94 @@ header{
 
 /* Resume Display Style start */
 .resume {
-  display: none;
   padding: 20px;
   margin-top: 30px;
   background: #fff;
-  color: #5A5978;
+  color: #000000;
+  font-size: 0.7rem;
+  h4{
+    margin-top: 10px;
+    font-size: 0.8rem;
+  }
+  hr{
+    border-top: 1px solid #0085DD;
+  }
 }
 /* Display resume Header style */
 .displayheader{
-  color: #ffffff;
-  font-size: 2rem;
-  text-align: center;
-  background-color: #6E6E6E;
-}
-/* Display resume main style */
-.mainresumesection{
-  margin: 10px 40px;
-  > h4{
-    margin-top: 10px;
-    padding: 2px 0 2px 20px;
-    font-size: 20px;
-    color:#fff;
-    background-color: #5A5978;
+  #displayName{
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
   }
-}
-/* display Input group styles */
-.display-input-group{
-  display: flex;
-  align-items: baseline;
-  h4{
-    font-size: 13px;
-    color: #5A5978;
+  h2{
+    font-size: 2rem;
+    color: #000000;
   }
-  p{
-    font-size: 12px;
-    padding: 5px;
+  #displaylastName{
+    color: #0085DD;
+  }
+  #displayStatus{
+    color: #00000097;
+    font-weight: bold;
+    font-size: 0.8rem;
+    margin-left: 10px;
   }
 }
 /* Styles for how the cridentials in display form appear */
 .display-credentials{
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  font-size: 12px;
-  color: #0056b3;
+  padding: 5px 10px;
+  gap: 5px;
+  font-size: 11px;
+  background-color: #000000;
+  color: #f1f1f1;
 }
 /* Styles for the display summary,education,experience */
+li::marker{
+  color: #0085DD;
+}
+ul{
+  margin: 5px 0 0 30px;
+  font-size: 0.7rem;
+}
 #displaySummary{
-  margin-top: 10px;
-  font-size: 14px;
+  margin-top: 5px;
 }
 #displayEducationBox,#displayExperienceBox{
-  margin-top: 10px;
-  padding-left: 30px;
   .date{
-    justify-content: flex-end;
-    align-items: center;
+    float: inline-end;
     font-style: italic;
-    color: #007bff;
+    span{
+      color: #0085DD;
+      font-size: 0.6rem;
+    }
+  }
+  
+  .displaydefinedInput{
+    margin-top: 10px;
+
   }
   .defiendInputNameAndPlace{
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    :nth-child(2){
+      opacity: 0.75;
+      font-size: 0.7rem;
+    }
     span{
-      font-size: 14px;
-      font-weight: bold;
+      font-size: 0.75rem;
+      font-weight: bolder;
     }
   }
-  p{
-    margin-top: 5px;
-    font-size: 14px;
+}
+#displaySkillsBox{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+  li{
+    margin-left: 10px;
   }
 }
 /* Resume Display Style End */
@@ -431,18 +448,17 @@ header{
     padding: 0;
   }
 }
+/* 
 @media Only screen and (max-width:500px) {
-  /* Display resume Header style */
+ 
 .displayheader{
   font-size: 1.6rem;
 }
-/* Display resume main style */
 .mainresumesection{
   > h4{
     font-size: 16px;
   }
 }
-/* display Input group styles */
 .display-input-group{
   h4{
     font-size: 9px;
@@ -451,11 +467,9 @@ header{
     font-size: 8px;
   }
 }
-/* Styles for how the cridentials in display form appear */
 .display-credentials{
   font-size: 8px;
 }
-/* Styles for the display summary,education,experience */
 #displaySummary{
   font-size: 10px;
 }
@@ -470,3 +484,4 @@ header{
   }
 }
 }
+ */

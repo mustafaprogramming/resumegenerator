@@ -33,8 +33,11 @@
         <form id="resumeForm" Username="" style="display: none;">
             
             <!-- Personal Information -->
-            <label for="name">Full Name</label>
-            <input type="text" id="name" name="name" placeholder="Your full name" required>
+            <label for="firstName">First Name</label>
+            <input type="text" id="firstName" name="firstName" placeholder="Your full First Name" required>
+
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" name="lastName" placeholder="Your full Last Name" required>
 
             <label for="email">Email Address</label>
             <input type="email" id="email" name="email" placeholder="Your email address" required>
@@ -50,20 +53,11 @@
             <label for="current-status">Current Status</label>
             <input type="text" id="current-status" name="current-status" placeholder="Write your current Status" required>
             <!-- Skills -->
-            <label for="skills">Skills</label>
-            <input type="text" id="skills" name="skills"  placeholder="List your skills" required>
-            <!-- activities -->
-            <label for="activities">activities</label>
-            <input type="text" id="activities" name="activities"  placeholder="List your activities" required>
-            <!-- Custom entries -->
             <div>
-                <h4>Add custom entries (optional)<button class="addBtn Btn" id="addEntriesBtn" type="button">+</button></h4>
+                <h4>Skills<button class="addBtn Btn" id="addSkillsBtn" type="button">+</button></h4>
             </div>
-            <section id="custom-entry-box">
-                <div class="definedInput customeEntry">
-                    <input class="customeField" placeholder="Entry Name" type="text">
-                    <input placeholder="Entry Value" class="customFieldValue" type="text">
-                </div>
+            <section id="skillBox">
+                
             </section>
             <!-- summary -->
             <label for="resume-summary">Summary</label>
@@ -90,56 +84,52 @@
             <input type="submit" value="Generate Resume">
         </form>
         <!-- Generated Resume Display -->
-        <section id="resumeDisplay" class="resume" >
+        <section id="resumeDisplay" class="resume" style="display: none;">
             
             <div class="displayheader">
-                <p id="displayName" contenteditable="false">name</p>
-            </div>
-            <main class="mainresumesection">
-                <!-- Skills -->
-                <div class="display-input-group">
-                    <h4 >>&nbsp;Skills:</h4>
-                    <p id="displaySkills" contenteditable="false"></p>
+                <div id="displayName">
+                    <h2 id="displayfisrtName" contenteditable="false"></h2>
+                    <h2 id="displaylastName" contenteditable="false"></h2>
+                    <span id="displayStatus" contenteditable="false"></span>
                 </div>
-                <!-- Status -->
-                <div class="display-input-group">
-                    <h4 >>&nbsp;Status:</h4>
-                    <p id="displayStatus" contenteditable="false"></p>
+                <!-- credentials -->
+                <div class="display-credentials">
+                    <p id="displayEmail" contenteditable="false"></p>
+                    <p id="displayPhone" contenteditable="false"></p>
+                    <p id="displayLocation" contenteditable="false"></p>
+                    <p id="displayLinkedin" contenteditable="false"></p>
                 </div>
-                     <!-- Activities -->
-                <div class="display-input-group">
-                    <h4 >>&nbsp;Activities:</h4>
-                    <p id="displayActivities" contenteditable="false"></p>
-                </div>
-                <!-- custom entries -->
-                <div id="resumeCustomEntries">
-                        
-                </div>
-
-            <!-- credentials -->
-            <div class="display-credentials">
-                <p id="displayEmail" contenteditable="false"></p>
-                <p id="displayPhone" contenteditable="false"></p>
-                <p id="displayLocation" contenteditable="false"></p>
-                <p id="displayLinkedin" contenteditable="false"></p>
             </div>
             <!-- summary -->
-            <h4>>&nbsp;Summary</h4>
+            <h4>Professional Summary</h4>
+            <hr>
             <p id="displaySummary" contenteditable="false">
                 
             </p>
-            <!-- Education -->
-            <h4>>&nbsp;Education</h4>
-            <div id="displayEducationBox">
-                
-            </div>
-            
             <!-- Work Experience -->
-            <h4>>&nbsp;Experience</h4>
+            <h4>Work History</h4>
+            <hr>
             <div id="displayExperienceBox">
                 
             </div>
-        </main>
+            <!-- Skills -->
+            <h4 >Skills:</h4>
+            <hr>
+            <ul id="displaySkillsBox">
+                
+            </ul>
+            <!-- Education -->
+            <h4>Education</h4>
+            <hr>
+            <div id="displayEducationBox">
+                
+            </div>
+                
+
+            
+            
+            
+            
         <button class="Btn" id="saveResume" style="display: none;">Save</button>
         </section>
     </div>

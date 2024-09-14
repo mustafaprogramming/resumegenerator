@@ -32,55 +32,47 @@
     </header>
     <div class="container" >
         <!-- Generated Resume Display -->
-        <section id="resumeDisplay" class="resume" style="display: block;">
+        <section id="resumeDisplay" class="resume" >
             
             <div class="displayheader">
-                <p id="displayName" contenteditable="false">name</p>
-            </div>
-            <main class="mainresumesection">
-                <!-- Skills -->
-            <div class="display-input-group">
-                <h4 >>&nbsp;Skills:</h4>
-                <p id="displaySkills" contenteditable="false"></p>
-            </div>
-            <!-- Status -->
-            <div class="display-input-group">
-                <h4 >>&nbsp;Status:</h4>
-                <p id="displayStatus" contenteditable="false"></p>
-            </div>
-            <!-- Activities -->
-            <div class="display-input-group">
-                <h4 >>&nbsp;Activities:</h4>
-                <p id="displayActivities" contenteditable="false"></p>
-            </div>
-            <!-- custom entries -->
-            <div id="resumeCustomEntries">
-                        
-            </div>
-            <!-- credentials -->
-            <div class="display-credentials">
-                <p id="displayEmail" contenteditable="false"></p>
-                <p id="displayPhone" contenteditable="false"></p>
-                <p id="displayLocation" contenteditable="false"></p>
-                <p id="displayLinkedin" contenteditable="false"></p>
+                <div id="displayName">
+                    <h2 id="displayfisrtName" contenteditable="false"></h2>
+                    <h2 id="displaylastName" contenteditable="false"></h2>
+                    <span id="displayStatus" contenteditable="false"></span>
+                </div>
+                <!-- credentials -->
+                <div class="display-credentials">
+                    <p id="displayEmail" contenteditable="false"></p>
+                    <p id="displayPhone" contenteditable="false"></p>
+                    <p id="displayLocation" contenteditable="false"></p>
+                    <p id="displayLinkedin" contenteditable="false"></p>
+                </div>
             </div>
             <!-- summary -->
-            <h4>>&nbsp;Summary</h4>
+            <h4>Professional Summary</h4>
+            <hr>
             <p id="displaySummary" contenteditable="false">
                 
             </p>
-            <!-- Education -->
-            <h4>>&nbsp;Education</h4>
-            <div id="displayEducationBox">
-                
-            </div>
-            
             <!-- Work Experience -->
-            <h4>>&nbsp;Experience</h4>
+            <h4>Work History</h4>
+            <hr>
             <div id="displayExperienceBox">
                 
             </div>
-        </main>
+            <!-- Skills -->
+            <h4 >Skills:</h4>
+            <hr>
+            <ul id="displaySkillsBox">
+                
+            </ul>
+            <!-- Education -->
+            <h4>Education</h4>
+            <hr>
+            <div id="displayEducationBox">
+                
+            </div>
+                
         </section>
         <button id="downloadPDF" class="Btn" style="width: 100%;">Download PDF</button>
     </div>
@@ -114,18 +106,17 @@
         });
         //setting display form
         function settingForm(resumeData){
-         document.getElementById('displayName').innerHTML=resumeData.name;
+         document.getElementById('displayfisrtName').innerHTML=resumeData.firstname;
+         document.getElementById('displaylastName').innerHTML=resumeData.lastname;
+         document.getElementById('displayStatus').innerHTML=resumeData.status;
          document.getElementById('displayEmail').innerHTML=resumeData.email;
          document.getElementById('displayPhone').innerHTML=resumeData.phone;
          document.getElementById('displayLocation').innerHTML=resumeData.location;
          document.getElementById('displayLinkedin').innerHTML=resumeData.linkedin;
-         document.getElementById('displayStatus').innerHTML=resumeData.status;
-         document.getElementById('displaySkills').innerHTML=resumeData.skills;
-         document.getElementById('resumeCustomEntries').innerHTML=resumeData.customEntries;
          document.getElementById('displaySummary').innerHTML=resumeData.summary;
-         document.getElementById('displayActivities').innerHTML=resumeData.activity;
          document.getElementById('displayEducationBox').innerHTML=resumeData.education;
          document.getElementById('displayExperienceBox').innerHTML=resumeData.experience;
+         document.getElementById('displaySkillsBox').innerHTML=resumeData.skills;
         };
         //setting up dynamic form loading
         window.addEventListener('DOMContentLoaded', () => {
@@ -141,7 +132,7 @@
                 resumeDisplay.setAttribute('resumeFor',`${resumeData.id}`);
                 document.getElementById('resumeId').innerHTML=`${resumeData.id}`;
                 document.title=`${resumeData.id}`;
-                settingForm(resumeData)
+                settingForm(resumeData);
              }else{
             document.querySelector('body').innerHTML=`<div class="error-box">
                                                         Resume Not Found

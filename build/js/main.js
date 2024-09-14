@@ -9,16 +9,15 @@ const resumeContainer = document.getElementById('userResumes');
 const resumeForm = document.getElementById('resumeForm');
 //Const for all the display form seaction
 const resumeDisplay = document.getElementById('resumeDisplay');
-const displayName = document.getElementById('displayName');
+const displayFisrtName = document.getElementById('displayfisrtName');
+const displayLastName = document.getElementById('displaylastName');
 const displayEmail = document.getElementById('displayEmail');
 const displayPhone = document.getElementById('displayPhone');
 const displayLocation = document.getElementById('displayLocation');
 const displayLinkedin = document.getElementById('displayLinkedin');
 const displayStatus = document.getElementById('displayStatus');
-const displaySkills = document.getElementById('displaySkills');
+const displaySkills = document.getElementById('displaySkillsBox');
 const summary = document.getElementById('displaySummary');
-const displayActiviy = document.getElementById('displayActivities');
-const resumeCustomEntries = document.getElementById('resumeCustomEntries');
 const displayEducationBox = document.getElementById('displayEducationBox');
 const displayExperienceBox = document.getElementById('displayExperienceBox');
 const formHeading = document.getElementById('formHeading');
@@ -124,39 +123,44 @@ function highlited() {
 ;
 //resetting input values in the input form
 function setInputForm() {
-    document.getElementById('name').value = '';
+    document.getElementById('firstName').value = '';
+    document.getElementById('lastName').value = '';
     document.getElementById('email').value = '';
     document.getElementById('phone').value = '';
     document.getElementById('resmue-location').value = '';
     document.getElementById('resume-linkedin').value = '';
     document.getElementById('current-status').value = '';
-    document.getElementById('skills').value = '';
-    document.getElementById('activities').value = '';
     document.getElementById('resume-summary').value = '';
     document.getElementById('education-box').innerHTML = `<div class="definedInput">
-                   <span>Enter your Education</span>
-                   <input type="text" required>
-                   <span>Enter place of Education</span>
-                   <input type="text" required>
-                   <span>Enter your Education discription</span>
-                   <textarea rows="4"  placeholder="List your education discription" required></textarea>
-               </div>`;
+                    <span>Enter Starting and ending date of your Education</span>
+                    <div class="date"><input type="text" required>&nbsp;<input type="text" required></div>
+                    <span>Enter your Education</span>
+                    <input type="text" required>
+                    <span>Enter place of Education</span>
+                    <input type="text" required>
+                </div>`;
     document.getElementById('experience-box').innerHTML = `<div class="definedInput">
-               <span>Enter Starting and ending date of your Work</span>
-               <div class="date"><input type="text" required>&nbsp;<input type="text" required></div>
-               <span>Enter your Work</span>
-               <input type="text" required>
-               <span>Enter place of Work</span>
-               <input type="text" required>
-               <span>Enter your Work discription</span>
-               <textarea rows="4" placeholder="List your work experience" required></textarea>
-           </div>`;
-    document.getElementById('custom-entry-box').innerHTML = `
-                <div class="definedInput customeEntry">
-                    <input class="customeField" placeholder="Entry Name" type="text">
-                    <input placeholder="Entry Value" class="customFieldValue" type="text">
-                </div>
-    `;
+                    <span>Enter Starting and ending date of your Work</span>
+                    <div class="date"><input type="text" required>&nbsp;<input type="text" required></div>
+                    <span>Enter your Work</span>
+                    <input type="text" required>
+                    <span>Enter place of Work</span>
+                    <input type="text" required>
+                    <span>Enter your Work discription</span>
+                    <div>
+                        <h5>Work Points<button class="addBtn Btn" id="addWorkPointBtn"
+                        onclick="(()=>makeWorkPoint('workPointBox'))()"  
+                        type="button">+</button></h5>
+                    </div>
+                    <section id="workPointBox">
+                        <div class="definedInput">
+                            <input placeholder="Enter WorkPoint" type="text" required>
+                        </div>
+                    </section>
+                </div>`;
+    document.getElementById('skillBox').innerHTML = `<div class="definedInput">
+                    <input placeholder="Enter Skill" type="text" required>
+                </div>`;
 }
 //Getting new form layout for the selected form
 function getResumeForm(resumeName) {
@@ -177,15 +181,14 @@ function getResumeForm(resumeName) {
 }
 //Setting display form according to the storage data
 function settingForm(resumeData) {
-    displayName.innerHTML = resumeData.name;
+    displayFisrtName.innerHTML = resumeData.firstname;
+    displayLastName.innerHTML = resumeData.lastname;
     displayEmail.innerHTML = resumeData.email;
     displayPhone.innerHTML = resumeData.phone;
     displayLocation.innerHTML = resumeData.location;
     displayLinkedin.innerHTML = resumeData.linkedin;
     displayStatus.innerHTML = resumeData.status;
     displaySkills.innerHTML = resumeData.skills;
-    displayActiviy.innerHTML = resumeData.activity;
-    resumeCustomEntries.innerHTML = resumeData.customEntries;
     summary.innerHTML = resumeData.summary;
     displayEducationBox.innerHTML = resumeData.education;
     displayExperienceBox.innerHTML = resumeData.experience;
@@ -194,15 +197,14 @@ function settingForm(resumeData) {
 function makeUser(id) {
     let userResume = {
         id: id,
-        name: displayName.innerHTML,
+        firstname: displayFisrtName.innerHTML,
+        lastname: displayLastName.innerHTML,
         email: displayEmail.innerHTML,
         phone: displayPhone.innerHTML,
         location: displayLocation.innerHTML,
         linkedin: displayLinkedin.innerHTML,
         status: displayStatus.innerHTML,
         skills: displaySkills.innerHTML,
-        activity: displayActiviy.innerHTML,
-        customEntries: resumeCustomEntries.innerHTML,
         summary: summary.innerHTML,
         education: displayEducationBox.innerHTML,
         experience: displayExperienceBox.innerHTML
@@ -264,6 +266,15 @@ function populate() {
                         })()"><i class="fa-solid fa-trash"></i></button>`;
         resumeContainer.appendChild(div);
     }
+}
+function makeWorkPoint(pointsBox) {
+    const workPointsBox = document.getElementById(pointsBox);
+    let div = document.createElement('div');
+    div.id = 'removeWP' + pointsBox + workPointsBox.children.length;
+    div.className = "definedInput";
+    div.innerHTML = `<input placeholder="Enter Work Point" type="text">
+                        <button class="removeBtn Btn" type="button" onclick="(() => remove('removeWP${pointsBox + workPointsBox.children.length}'))()">-</button>`;
+    workPointsBox.appendChild(div);
 }
 ////////////////////////////// ALL FUNCTIONS END ///////////////////////////////////////////////
 ////////////////////////////// ALL EVENTLISTENERS START ////////////////////////////////////////
@@ -335,61 +346,60 @@ resumeForm.addEventListener('submit', function (event) {
     event.preventDefault(); // Prevent form submission
     // Get values from the form
     const username = resumeForm.getAttribute('Username');
-    const inputName = document.getElementById('name').value;
+    const inputFisrtName = document.getElementById('firstName').value;
+    const inputLastName = document.getElementById('lastName').value;
     const inputEmail = document.getElementById('email').value;
     const inputPhone = document.getElementById('phone').value;
     const inputLocation = document.getElementById('resmue-location').value;
     const inputLinkedin = document.getElementById('resume-linkedin').value;
     const inputStatus = document.getElementById('current-status').value;
-    const inputSkills = document.getElementById('skills').value;
-    const inputActivities = document.getElementById('activities').value;
     const inputsummary = document.getElementById('resume-summary').value;
+    const inputSkillsbox = document.getElementById('skillBox');
     const educationBox = document.getElementById('education-box');
     const experienceBox = document.getElementById('experience-box');
-    const customEntryBox = document.getElementById('custom-entry-box');
-    displayName.innerHTML = inputName;
+    displayFisrtName.innerHTML = inputFisrtName;
+    displayLastName.innerHTML = inputLastName;
     displayEmail.innerHTML = inputEmail;
     displayPhone.innerHTML = inputPhone;
     displayLocation.innerHTML = inputLocation;
     displayLinkedin.innerHTML = inputLinkedin;
-    displayStatus.innerHTML = inputStatus.split(',').join(', ');
-    displaySkills.innerHTML = inputSkills.split(',').join(', ');
-    displayActiviy.innerHTML = inputActivities.split(',').join(', ');
+    displayStatus.innerHTML = inputStatus;
     summary.innerHTML = inputsummary;
     let displayEducationDataArray = [];
     let displayExperienceDataArray = [];
-    let resumeCustomEntriesArray = [];
-    for (let i = 0; i < customEntryBox.children.length; i++) {
-        let customEntryName = customEntryBox.children[i].children[0].value.trim();
-        if (customEntryName) {
-            let customEntryValue = customEntryBox.children[i].children[1].value;
-            resumeCustomEntriesArray.push(`<div class="display-input-group">
-                    <h4 contenteditable="false">>&nbsp;${customEntryName}</h4>
-                        <p id="hfh" contenteditable="false">${customEntryValue}</p>
-                    </div>`);
-        }
-        ;
+    let skillArray = [];
+    for (let i = 0; i < inputSkillsbox.children.length; i++) {
+        let skill = inputSkillsbox.children[i].children[0].value;
+        skillArray.push(`<li contenteditable="false">${skill}</li>`);
     }
     for (let i = 0; i < educationBox.children.length; i++) {
-        let eduactionBoxName = educationBox.children[i].children[1].value;
-        let eduactionBoxPlace = educationBox.children[i].children[3].value;
-        let eduactionBoxValue = educationBox.children[i].children[5].value;
+        let eduactionStartDate = educationBox.children[i].children[1].children[0].value;
+        let eduactionEndDate = educationBox.children[i].children[1].children[1].value;
+        let educationBoxName = educationBox.children[i].children[3].value;
+        let educationBoxPlace = educationBox.children[i].children[5].value;
         displayEducationDataArray.push(`<div class="displaydefinedInput">
-        <div class="defiendInputNameAndPlace">
-            <span contenteditable="false">${eduactionBoxName}</span>
-            &nbsp;
-            <span contenteditable="false">${eduactionBoxPlace}</span>
-        </div>
-        <hr>
-        <p contenteditable="false">${eduactionBoxValue}</p>
-        </div>`);
+                                    <div class="date" >
+                                        <span contenteditable="false">${eduactionStartDate}</span>
+                                         &nbsp;-&nbsp;
+                                        <span contenteditable="false">${eduactionEndDate}</span>
+                                    </div>
+                                    <div class="defiendInputNameAndPlace">
+                                        <span contenteditable="false">${educationBoxName}</span>
+                                        <span contenteditable="false">${educationBoxPlace}</span>
+                                    </div>
+                                   </div>`);
     }
     for (let i = 0; i < experienceBox.children.length; i++) {
         let workStartDate = experienceBox.children[i].children[1].children[0].value;
         let workEndDate = experienceBox.children[i].children[1].children[1].value;
         let experienceBoxName = experienceBox.children[i].children[3].value;
         let experienceBoxPlace = experienceBox.children[i].children[5].value;
-        let experienceBoxValue = experienceBox.children[i].children[7].value;
+        let inputWorkPointbox = experienceBox.children[i].children[8];
+        let workPointArray = [];
+        for (let i = 0; i < inputWorkPointbox.children.length; i++) {
+            let point = inputWorkPointbox.children[i].children[0].value;
+            workPointArray.push(`<li contenteditable="false">${point}</li>`);
+        }
         displayExperienceDataArray.push(`<div class="displaydefinedInput">
                                     <div class="date" >
                                         <span contenteditable="false">${workStartDate}</span>
@@ -398,16 +408,14 @@ resumeForm.addEventListener('submit', function (event) {
                                     </div>
                                     <div class="defiendInputNameAndPlace">
                                         <span contenteditable="false">${experienceBoxName}</span>
-                                        &nbsp;
                                         <span contenteditable="false">${experienceBoxPlace}</span>
                                     </div>
-                                    <hr>
-                                    <p contenteditable="false">${experienceBoxValue}</p>
+                                    <ul>${workPointArray.join('')}<ul>
                                    </div>`);
     }
     displayEducationBox.innerHTML = displayEducationDataArray.join('');
     displayExperienceBox.innerHTML = displayExperienceDataArray.join('');
-    resumeCustomEntries.innerHTML = resumeCustomEntriesArray.join('');
+    displaySkills.innerHTML = skillArray.join('');
     //make userResume
     resumeDisplay.setAttribute('resumeFor', `${username}`);
     let id = resumeDisplay.getAttribute('resumeFor');
@@ -429,12 +437,12 @@ document.getElementById('addEducationBtn').addEventListener('click', () => {
     div.id = 'removeEdu' + educationBox.children.length;
     div.className = "definedInput";
     div.innerHTML =
-        `<span>Enter your Education</span>
-        <input type="text" required>
-        <span>Enter place of Education</span>
-        <input type="text" required>
-        <span>Enter your Education discription</span>
-        <textarea rows="4" placeholder="List your education discription" required></textarea>
+        `<span>Enter Starting and ending date of your Education</span>
+                    <div class="date"><input type="text" required>&nbsp;<input type="text" required></div>
+                    <span>Enter your Education</span>
+                    <input type="text" required>
+                    <span>Enter place of Education</span>
+                    <input type="text" required>
         <button class="removeBtn Btn" type="button" onclick="(() => remove('removeEdu'+${educationBox.children.length}))()">-</button>
                 `;
     educationBox.appendChild(div);
@@ -447,27 +455,33 @@ document.getElementById('addExperienceBtn').addEventListener('click', () => {
     div.className = "definedInput";
     div.innerHTML = `
                   <span>Enter Starting and ending date of your Work</span>
-                  <div class="date"><input type="text" required>&nbsp;<input type="text" required></div>
-                  <span>Enter your Work</span>
-                  <input type="text" required>
-                  <span>Enter place of Work</span>
-                  <input type="text" required>
-                  <span>Enter your Work discription</span>
-                  <textarea rows="4" placeholder="List your work experience" required></textarea>
+                    <div class="date"><input type="text" required>&nbsp;<input type="text" required></div>
+                    <span>Enter your Work</span>
+                    <input type="text" required>
+                    <span>Enter place of Work</span>
+                    <input type="text" required>
+                    <span>Enter your Work discription</span>
+                    <div>
+                        <h5>Work Points<button class="addBtn Btn" onclick="(()=>makeWorkPoint('workPointBox${experienceBox.children.length}'))()" type="button">+</button></h5>
+                    </div>
+                    <section id="workPointBox${experienceBox.children.length}">
+                        <div class="definedInput">
+                            <input placeholder="Enter WorkPoint" type="text" required>
+                        </div>
+                    </section>
                   <button class="removeBtn Btn" type="button" onclick="(() => remove('removeExp'+${experienceBox.children.length}))()">-</button>
                 </div>`;
     experienceBox.appendChild(div);
 });
-//making custome entries on click
-document.getElementById('addEntriesBtn').addEventListener('click', () => {
-    const customEntryBox = document.getElementById('custom-entry-box');
+//making skill on click
+document.getElementById('addSkillsBtn').addEventListener('click', () => {
+    const skillBox = document.getElementById('skillBox');
     let div = document.createElement('div');
-    div.id = 'removeEnt' + customEntryBox.children.length;
-    div.className = "definedInput customeEntry";
-    div.innerHTML = `<input class="customeField" placeholder="Entry Name" type="text">
-                    <input placeholder="Entry Value" class="customFieldValue" type="text">
-                    <button class="removeBtn Btn" type="button" onclick="(() => remove('removeEnt'+${customEntryBox.children.length}))()">-</button>`;
-    customEntryBox.appendChild(div);
+    div.id = 'removeSkl' + skillBox.children.length;
+    div.className = "definedInput";
+    div.innerHTML = `<input placeholder="Enter Skill" type="text">
+                    <button class="removeBtn Btn" type="button" onclick="(() => remove('removeSkl'+${skillBox.children.length}))()">-</button>`;
+    skillBox.appendChild(div);
 });
 //Making a sharable link on get link button click
 shareBtn.addEventListener('click', () => {
