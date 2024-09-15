@@ -85,7 +85,24 @@
         </form>
         <!-- Generated Resume Display -->
         <section id="resumeDisplay" class="resume" style="display: none;">
-            
+            <fieldset id="colorSetter" class="colorBox" style="display: none;">
+                <legend style="color: transparent;">Resume Color</legend>
+                <fieldset class="colorBox">
+                    <legend>Main Color</legend>
+                    <input id="mainColor" type="color">
+                    <input id="mainColorValue" type="text" readonly>
+                </fieldset>
+                <fieldset class="colorBox">
+                    <legend>Secondary Color</legend>
+                    <input id="secondaryColor" type="color">
+                    <input id="secondaryColorValue" type="text" readonly>
+                </fieldset>
+                <fieldset class="colorBox">
+                    <legend>Accent Color</legend>
+                    <input id="accentColor" type="color">
+                    <input id="accentColorValue" type="text" readonly>
+                </fieldset>
+            </fieldset>
             <div class="displayheader">
                 <div id="displayName">
                     <h2 id="displayfisrtName" contenteditable="false"></h2>
@@ -93,7 +110,7 @@
                     <span id="displayStatus" contenteditable="false"></span>
                 </div>
                 <!-- credentials -->
-                <div class="display-credentials">
+                <div id="display-credentials">
                     <p id="displayEmail" contenteditable="false"></p>
                     <p id="displayPhone" contenteditable="false"></p>
                     <p id="displayLocation" contenteditable="false"></p>

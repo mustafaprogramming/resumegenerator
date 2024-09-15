@@ -11,7 +11,10 @@ type resumeObj ={
     skills:string,
     summary:string,
     education:string,
-    experience:string
+    experience:string,
+    mainColor:string;
+    secondaryColor:string;
+    accentColor:string;
 }
 //Storagefor Resume Objects
 let storedResume:resumeObj[]=[];
@@ -36,7 +39,12 @@ const summary=(document.getElementById('displaySummary') as HTMLParagraphElement
 const displayEducationBox=(document.getElementById('displayEducationBox') as HTMLDivElement);
 const displayExperienceBox=(document.getElementById('displayExperienceBox') as HTMLDivElement);
 const formHeading=(document.getElementById('formHeading') as HTMLHeadingElement)
-
+const mainColorInput=(document.getElementById('mainColor')as HTMLInputElement);
+const mainColorValue=(document.getElementById('mainColorValue')as HTMLInputElement);
+const secondryColorInput=(document.getElementById('secondaryColor')as HTMLInputElement);
+const secondryColorValue=(document.getElementById('secondaryColorValue')as HTMLInputElement);
+const accentColorInput=(document.getElementById('accentColor')as HTMLInputElement);
+const accentColorValue=(document.getElementById('accentColorValue')as HTMLInputElement);
 //buttons of all kinds
 const sharelink=(document.getElementById('shareLink') as HTMLLinkElement)
 const saveBtn=(document.getElementById('saveResume') as HTMLButtonElement);
@@ -143,6 +151,7 @@ function highlited(){
 };
 //resetting input values in the input form
 function setInputForm(){
+    resetEdit();
     (document.getElementById('firstName') as HTMLInputElement).value='';
     (document.getElementById('lastName') as HTMLInputElement).value='';
     (document.getElementById('email') as HTMLInputElement).value='';
@@ -201,40 +210,46 @@ function getResumeForm(resumeName:string){
 }
 //Setting display form according to the storage data
 function settingForm(resumeData:resumeObj){
-   displayFisrtName.innerHTML=resumeData.firstname;
-   displayLastName.innerHTML=resumeData.lastname;
-   displayEmail.innerHTML=resumeData.email;
-   displayPhone.innerHTML=resumeData.phone;
-   displayLocation.innerHTML=resumeData.location;
-   displayLinkedin.innerHTML=resumeData.linkedin;
-   displayStatus.innerHTML=resumeData.status;
-   displaySkills.innerHTML=resumeData.skills;
-   summary.innerHTML=resumeData.summary;
-   displayEducationBox.innerHTML=resumeData.education;
-   displayExperienceBox.innerHTML=resumeData.experience;
+    displayFisrtName.innerHTML=resumeData.firstname;
+    displayLastName.innerHTML=resumeData.lastname;
+    displayEmail.innerHTML=resumeData.email;
+    displayPhone.innerHTML=resumeData.phone;
+    displayLocation.innerHTML=resumeData.location;
+    displayLinkedin.innerHTML=resumeData.linkedin;
+    displayStatus.innerHTML=resumeData.status;
+    displaySkills.innerHTML=resumeData.skills;
+    summary.innerHTML=resumeData.summary;
+    displayEducationBox.innerHTML=resumeData.education;
+    displayExperienceBox.innerHTML=resumeData.experience;
+    setColors(resumeData.mainColor,resumeData.secondaryColor,resumeData.accentColor)
+    resetEdit()
 }
 //making user and saving it to local storage when clicking generate form
 function makeUser(id:string){
-   let userResume={
-       id:id,
-       firstname:displayFisrtName.innerHTML,
-       lastname:displayLastName.innerHTML,
-       email:displayEmail.innerHTML,
-       phone:displayPhone.innerHTML,
-       location:displayLocation.innerHTML,
-       linkedin:displayLinkedin.innerHTML,
-       status:displayStatus.innerHTML,
-       skills:displaySkills.innerHTML,
-       summary:summary.innerHTML,
-       education:displayEducationBox.innerHTML,
-       experience:displayExperienceBox.innerHTML
-   }
-   localStorage.setItem(userResume.id, JSON.stringify(userResume));
+    let userResume={
+        id:id,
+        firstname:displayFisrtName.innerHTML,
+        lastname:displayLastName.innerHTML,
+        email:displayEmail.innerHTML,
+        phone:displayPhone.innerHTML,
+        location:displayLocation.innerHTML,
+        linkedin:displayLinkedin.innerHTML,
+        status:displayStatus.innerHTML,
+        skills:displaySkills.innerHTML,
+        summary:summary.innerHTML,
+        education:displayEducationBox.innerHTML,
+        experience:displayExperienceBox.innerHTML,
+        mainColor:mainColorInput.value,
+        secondaryColor:secondryColorInput.value,
+        accentColor:accentColorInput.value,
+    }
+    localStorage.setItem(userResume.id, JSON.stringify(userResume));
 }
 //resetting display
 function displayReset(){
     (document.getElementById('resume-links')as HTMLDivElement).style.display = 'none';
     (document.getElementById('shareLinkBox') as HTMLDivElement).style.display='none';
+    resetEdit()
     resumeDisplay.style.display = 'none';
     resumeForm.style.display='none';
     formHeading.style.display='none';
@@ -294,6 +309,70 @@ function makeWorkPoint(pointsBox:string){
                         <button class="removeBtn Btn" type="button" onclick="(() => remove('removeWP${pointsBox+workPointsBox.children.length}'))()">-</button>`;
         workPointsBox.appendChild(div)
 }
+//resetting edit 
+function resetEdit(){
+    (document.getElementById('colorSetter') as HTMLFieldSetElement).style.display='none';
+    saveBtn.style.display='none';
+    editBtn.style.display='block';
+    pdfBtn.style.opacity='1';
+    shareBtn.style.opacity='1';
+    resetBtn.style.opacity='1';
+    resetBtn.removeAttribute('disabled')
+    pdfBtn.removeAttribute('disabled')
+    shareBtn.removeAttribute('disabled')
+}
+//color functions
+//main color function 
+function mainColor(){
+    let color=mainColorInput.value;
+    mainColorValue.value=color;
+    mainColorValue.style.color=color;
+    (document.getElementById('display-credentials')as HTMLInputElement).style.backgroundColor=color;
+    document.querySelectorAll('.defiendInputNameAndPlace > span').forEach((ele)=>{
+        (ele as HTMLLIElement).style.color=color;
+    });
+    document.querySelectorAll('#resumeDisplay h4').forEach((ele)=>{
+        (ele as HTMLHeadingElement).style.color= color;
+    });
+    displayStatus.style.color=color;
+    displayFisrtName.style.color=color;
+}
+function secondaryColor(){
+    let color=secondryColorInput.value;
+    secondryColorValue.value=color;
+    secondryColorValue.style.color=color;
+    document.querySelectorAll('#resumeDisplay li>span').forEach((ele)=>{
+        (ele as HTMLLIElement).style.color=color;
+    });
+    summary.style.color=color;
+}
+function accentColor(){
+    let color=accentColorInput.value;
+    accentColorValue.value=color;
+    accentColorValue.style.color=color;
+    document.querySelectorAll('.date>span').forEach((ele)=>{
+        (ele as HTMLSpanElement).style.color=color;
+    });
+    document.querySelectorAll('#resumeDisplay li').forEach((ele)=>{
+        (ele as HTMLLIElement).style.color=color;
+    });
+    document.querySelectorAll('#resumeDisplay>hr').forEach((ele)=>{
+        (ele as HTMLSpanElement).style.borderTop= `1px solid ${color}`;
+    });
+    displayLastName.style.color=color;
+}
+function setColors(main:string,sec:string,acc:string){
+    accentColorInput.value=acc;
+    mainColorInput.value=main;
+    secondryColorInput.value=sec;
+    accentColorValue.value=acc;
+    mainColorValue.value=main;
+    secondryColorValue.value=sec;
+    accentColor();
+    mainColor();
+    secondaryColor();
+}
+
 ////////////////////////////// ALL FUNCTIONS END ///////////////////////////////////////////////
 
 ////////////////////////////// ALL EVENTLISTENERS START ////////////////////////////////////////
@@ -387,7 +466,7 @@ resumeForm.addEventListener('submit', function(event) {
 
  for(let i=0;i<inputSkillsbox.children.length;i++){
     let skill=(inputSkillsbox.children[i].children[0] as HTMLInputElement).value
-    skillArray.push(`<li contenteditable="false">${skill}</li>`)
+    skillArray.push(`<li contenteditable="false"><span style="color:#000;">${skill}</span></li>`)
  }
  for(let i=0;i<educationBox.children.length;i++){
     let eduactionStartDate=(educationBox.children[i].children[1].children[0] as HTMLInputElement).value;
@@ -416,7 +495,7 @@ resumeForm.addEventListener('submit', function(event) {
   let workPointArray:string[]=[]
   for(let i=0;i<inputWorkPointbox.children.length;i++){
     let point=(inputWorkPointbox.children[i].children[0] as HTMLInputElement).value
-    workPointArray.push(`<li contenteditable="false">${point}</li>`)
+    workPointArray.push(`<li contenteditable="false"><span style="color:#000;">${point}</span></li>`)
  }
   displayExperienceDataArray.push(`<div class="displaydefinedInput">
                                     <div class="date" >
@@ -434,13 +513,16 @@ resumeForm.addEventListener('submit', function(event) {
  displayEducationBox.innerHTML=displayEducationDataArray.join('');
  displayExperienceBox.innerHTML=displayExperienceDataArray.join('');
  displaySkills.innerHTML=skillArray.join('');
+ // make colors
+ setColors('#000000','#000000','#0085DD')
  //make userResume
     resumeDisplay.setAttribute('resumeFor',`${username}`);
     let id=resumeDisplay.getAttribute('resumeFor');
     if(!id)return;
     makeUser(id);
 
- // Show the resume
+// Show the resume
+    resetEdit()
  resumeDisplay.style.display = 'block';
  (document.getElementById('resume-links')as HTMLDivElement).style.display = 'flex';
  (document.getElementById('resumeForm') as HTMLDivElement).style.display = 'none';
@@ -518,7 +600,8 @@ editBtn.addEventListener('click',()=>{
     let editableContent=resumeDisplay.querySelectorAll('[contenteditable="false"]');
     editableContent.forEach((element:Element)=>{
         element.setAttribute('contenteditable','true')
-    })
+    });
+    (document.getElementById('colorSetter') as HTMLFieldSetElement).style.display='flex';
     saveBtn.style.display='block';
     editBtn.style.display='none';
     pdfBtn.style.opacity='0.5';
@@ -538,14 +621,7 @@ saveBtn.addEventListener('click',()=>{
     let id=resumeDisplay.getAttribute('resumeFor');
     if(!id)return;
     makeUser(id);
-    saveBtn.style.display='none';
-    editBtn.style.display='block';
-    pdfBtn.style.opacity='1';
-    shareBtn.style.opacity='1';
-    resetBtn.style.opacity='1';
-    resetBtn.removeAttribute('disabled')
-    pdfBtn.removeAttribute('disabled')
-    shareBtn.removeAttribute('disabled')
+    resetEdit()
 });
 //copping text to clip board
 copyBtn.addEventListener('click',()=>{
@@ -554,6 +630,18 @@ copyBtn.addEventListener('click',()=>{
 //change toottip value
 copyBtn.addEventListener('mouseover',()=>{
     (document.getElementById('copiedLink')as HTMLSpanElement).innerHTML='copy link';
+});
+//accent color changing for display resume
+accentColorInput.addEventListener('change',()=>{
+    accentColor()
+});
+//Secondary color changing for display resume
+secondryColorInput.addEventListener('change',()=>{
+    secondaryColor()
+});
+//secondary color changing for display resume
+mainColorInput.addEventListener('change',()=>{
+    mainColor()
 })
 ////////////////////////////// ALL EVENTLISTENERS END ////////////////////////////////////////
 // setting values on first load

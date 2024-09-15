@@ -32,8 +32,8 @@
     </header>
     <div class="container" >
         <!-- Generated Resume Display -->
-        <section id="resumeDisplay" class="resume" >
-            
+        <section id="resumeDisplay" class="resume">
+
             <div class="displayheader">
                 <div id="displayName">
                     <h2 id="displayfisrtName" contenteditable="false"></h2>
@@ -41,7 +41,7 @@
                     <span id="displayStatus" contenteditable="false"></span>
                 </div>
                 <!-- credentials -->
-                <div class="display-credentials">
+                <div id="display-credentials">
                     <p id="displayEmail" contenteditable="false"></p>
                     <p id="displayPhone" contenteditable="false"></p>
                     <p id="displayLocation" contenteditable="false"></p>
@@ -117,7 +117,41 @@
          document.getElementById('displayEducationBox').innerHTML=resumeData.education;
          document.getElementById('displayExperienceBox').innerHTML=resumeData.experience;
          document.getElementById('displaySkillsBox').innerHTML=resumeData.skills;
+         mainColor(resumeData.mainColor);
+         secondaryColor(resumeData.secondaryColor);
+         accentColor(resumeData.accentColor);
         };
+        //setting colors
+        //main color function 
+        function mainColor(color){
+            document.getElementById('display-credentials').style.backgroundColor=color;
+            document.querySelectorAll('.defiendInputNameAndPlace > span').forEach((ele)=>{
+                ele.style.color=color;
+            });
+            document.querySelectorAll('#resumeDisplay h4').forEach((ele)=>{
+                ele.style.color= color;
+            });
+            document.getElementById('displayStatus').style.color=color;
+            document.getElementById('displayfisrtName').style.color=color;
+        }
+        function secondaryColor(color){
+            document.querySelectorAll('#resumeDisplay li>span').forEach((ele)=>{
+                ele.style.color=color;
+            });
+            document.getElementById('displaySummary').style.color=color;
+        }
+        function accentColor(color){
+            document.querySelectorAll('.date>span').forEach((ele)=>{
+                ele.style.color=color;
+            });
+            document.querySelectorAll('#resumeDisplay li').forEach((ele)=>{
+                ele.style.color=color;
+            });
+            document.querySelectorAll('#resumeDisplay>hr').forEach((ele)=>{
+                ele.style.borderTop= `1px solid ${color}`;
+            });
+            document.getElementById('displaylastName').style.color=color;
+        }
         //setting up dynamic form loading
         window.addEventListener('DOMContentLoaded', () => {
          const urlParams = new URLSearchParams(window.location.search);
