@@ -26,9 +26,9 @@ const resumeContainer=(document.getElementById('userResumes') as HTMLDivElement)
 //Form in which we get the iput to generate Resume
 const resumeForm=(document.getElementById('resumeForm') as HTMLFormElement);
 //Const for all the display form seaction
- const resumeDisplay=(document.getElementById('resumeDisplay') as HTMLDivElement);
- const displayFisrtName=(document.getElementById('displayfisrtName') as HTMLHeadingElement);
- const displayLastName=(document.getElementById('displaylastName') as HTMLHeadingElement);
+const resumeDisplay=(document.getElementById('resumeDisplay') as HTMLDivElement);
+const displayFisrtName=(document.getElementById('displayfisrtName') as HTMLHeadingElement);
+const displayLastName=(document.getElementById('displaylastName') as HTMLHeadingElement);
 const displayEmail=(document.getElementById('displayEmail') as HTMLParagraphElement);
 const displayPhone=(document.getElementById('displayPhone') as HTMLParagraphElement);
 const displayLocation=(document.getElementById('displayLocation') as HTMLParagraphElement);
@@ -328,15 +328,9 @@ function mainColor(){
     mainColorValue.value=color;
     mainColorValue.style.color=color;
     (document.getElementById('display-credentials')as HTMLInputElement).style.backgroundColor=color;
-    document.querySelectorAll('.defiendInputNameAndPlace > span').forEach((ele)=>{
-        (ele as HTMLLIElement).style.color=color;
-    });
-    document.querySelectorAll('#resumeDisplay h4').forEach((ele)=>{
-        (ele as HTMLHeadingElement).style.color= color;
-    });
-    displayStatus.style.color=color;
+
     displayFisrtName.style.color=color;
-}
+};
 function secondaryColor(){
     let color=secondryColorInput.value;
     secondryColorValue.value=color;
@@ -344,6 +338,11 @@ function secondaryColor(){
     document.querySelectorAll('#resumeDisplay li>span').forEach((ele)=>{
         (ele as HTMLLIElement).style.color=color;
     });
+    
+    document.querySelectorAll('.defiendInputNameAndPlace > span').forEach((ele)=>{
+        (ele as HTMLLIElement).style.color=color;
+    });
+    displayStatus.style.color=color;
     summary.style.color=color;
 }
 function accentColor(){
@@ -352,6 +351,9 @@ function accentColor(){
     accentColorValue.style.color=color;
     document.querySelectorAll('.date>span').forEach((ele)=>{
         (ele as HTMLSpanElement).style.color=color;
+    });
+    document.querySelectorAll('#resumeDisplay h4').forEach((ele)=>{
+        (ele as HTMLHeadingElement).style.color= color;
     });
     document.querySelectorAll('#resumeDisplay li').forEach((ele)=>{
         (ele as HTMLLIElement).style.color=color;

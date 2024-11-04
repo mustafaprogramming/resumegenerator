@@ -308,15 +308,9 @@ function mainColor() {
     mainColorValue.value = color;
     mainColorValue.style.color = color;
     document.getElementById('display-credentials').style.backgroundColor = color;
-    document.querySelectorAll('.defiendInputNameAndPlace > span').forEach((ele) => {
-        ele.style.color = color;
-    });
-    document.querySelectorAll('#resumeDisplay h4').forEach((ele) => {
-        ele.style.color = color;
-    });
-    displayStatus.style.color = color;
     displayFisrtName.style.color = color;
 }
+;
 function secondaryColor() {
     let color = secondryColorInput.value;
     secondryColorValue.value = color;
@@ -324,6 +318,10 @@ function secondaryColor() {
     document.querySelectorAll('#resumeDisplay li>span').forEach((ele) => {
         ele.style.color = color;
     });
+    document.querySelectorAll('.defiendInputNameAndPlace > span').forEach((ele) => {
+        ele.style.color = color;
+    });
+    displayStatus.style.color = color;
     summary.style.color = color;
 }
 function accentColor() {
@@ -331,6 +329,9 @@ function accentColor() {
     accentColorValue.value = color;
     accentColorValue.style.color = color;
     document.querySelectorAll('.date>span').forEach((ele) => {
+        ele.style.color = color;
+    });
+    document.querySelectorAll('#resumeDisplay h4').forEach((ele) => {
         ele.style.color = color;
     });
     document.querySelectorAll('#resumeDisplay li').forEach((ele) => {

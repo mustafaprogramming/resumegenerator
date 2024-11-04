@@ -3,7 +3,7 @@
  margin: 0;
  padding: 0;
  box-sizing: border-box;
- font-family: Arial, Helvetica, sans-serif;
+ font-family: Spectral, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 /* Scrolllbar Styles */
 ::-webkit-scrollbar {
@@ -340,46 +340,48 @@ header{
   margin-top: 10px;
   background: #fff;
   color: #000000;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
+  
   h4{
     margin-top: 10px;
-    font-size: 0.8rem;
+    margin-bottom: 5px;
+    font-size: 1.1rem;
   }
   hr{
-    border-top: 1px solid #0085DD;
+    border-top: 1px solid;
   }
 }
 /* Display resume Header style */
 .displayheader{
   #displayName{
-    display: flex;
-    align-items: baseline;
-    gap: 5px;
+    text-align: center;
+    margin-bottom: 10px;
   }
   h2{
     font-size: 2rem;
+    margin-right: 5px;
+    display: inline;
   }
   #displayStatus{
-    opacity: 0.5;
+    display: block;
     font-weight: bold;
-    font-size: 0.8rem;
-    margin-left: 10px;
+    font-size: 1.3rem;
   }
 }
 /* Styles for how the cridentials in display form appear */
 #display-credentials{
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 10px;
   padding: 5px 10px;
-  gap: 5px;
-  font-size: 11px;
+  font-size: 0.85rem;
   background-color: #000000;
   color: #f1f1f1;
 }
 
 ul{
   margin: 5px 0 0 30px;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
 }
 #displaySummary{
   margin-top: 5px;
@@ -403,18 +405,19 @@ ul{
     flex-direction: column;
     :nth-child(2){
       opacity: 0.75;
-      font-size: 0.7rem;
+      font-size: 0.8rem;
     }
     span{
-      font-size: 0.75rem;
+      font-size: 0.85rem;
       font-weight: bolder;
     }
   }
 }
 #displaySkillsBox{
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   flex-wrap: wrap;
-  gap: 10px 20px;
+  gap: 10px;
   li{
     margin-left: 10px;
   }

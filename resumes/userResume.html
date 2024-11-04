@@ -60,18 +60,19 @@
             <div id="displayExperienceBox">
                 
             </div>
-            <!-- Skills -->
-            <h4 >Skills:</h4>
-            <hr>
-            <ul id="displaySkillsBox">
-                
-            </ul>
             <!-- Education -->
             <h4>Education</h4>
             <hr>
             <div id="displayEducationBox">
                 
             </div>
+            <!-- Skills -->
+            <h4 >Skills</h4>
+            <hr>
+            <ul id="displaySkillsBox">
+                
+            </ul>
+            
                 
         </section>
         <button id="downloadPDF" class="Btn" style="width: 100%;">Download PDF</button>
@@ -125,19 +126,18 @@
         //main color function 
         function mainColor(color){
             document.getElementById('display-credentials').style.backgroundColor=color;
-            document.querySelectorAll('.defiendInputNameAndPlace > span').forEach((ele)=>{
-                ele.style.color=color;
-            });
-            document.querySelectorAll('#resumeDisplay h4').forEach((ele)=>{
-                ele.style.color= color;
-            });
-            document.getElementById('displayStatus').style.color=color;
+
+            
             document.getElementById('displayfisrtName').style.color=color;
         }
         function secondaryColor(color){
             document.querySelectorAll('#resumeDisplay li>span').forEach((ele)=>{
                 ele.style.color=color;
             });
+            document.querySelectorAll('.defiendInputNameAndPlace > span').forEach((ele)=>{
+                ele.style.color=color;
+            });
+            document.getElementById('displayStatus').style.color=color;
             document.getElementById('displaySummary').style.color=color;
         }
         function accentColor(color){
@@ -146,6 +146,10 @@
             });
             document.querySelectorAll('#resumeDisplay li').forEach((ele)=>{
                 ele.style.color=color;
+            });
+            
+            document.querySelectorAll('#resumeDisplay h4').forEach((ele)=>{
+                ele.style.color= color;
             });
             document.querySelectorAll('#resumeDisplay>hr').forEach((ele)=>{
                 ele.style.borderTop= `1px solid ${color}`;

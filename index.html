@@ -84,7 +84,7 @@
             <input type="submit" value="Generate Resume">
         </form>
         <!-- Generated Resume Display -->
-        <section id="resumeDisplay" class="resume" style="display: none;">
+        <section id="resumeDisplay" class="resume" style="display: none;" contenteditable="true">
             <fieldset id="colorSetter" class="colorBox" style="display: none;">
                 <legend style="color: transparent;">Resume Color</legend>
                 <fieldset class="colorBox">
@@ -118,29 +118,29 @@
                 </div>
             </div>
             <!-- summary -->
-            <h4>Professional Summary</h4>
+            <h4>Career Objective</h4>
             <hr>
             <p id="displaySummary" contenteditable="false">
                 
             </p>
             <!-- Work Experience -->
-            <h4>Work History</h4>
+            <h4>Work Experience</h4>
             <hr>
             <div id="displayExperienceBox">
                 
             </div>
-            <!-- Skills -->
-            <h4 >Skills:</h4>
-            <hr>
-            <ul id="displaySkillsBox">
-                
-            </ul>
             <!-- Education -->
             <h4>Education</h4>
             <hr>
             <div id="displayEducationBox">
                 
             </div>
+            <!-- Skills -->
+            <h4 >Skills</h4>
+            <hr>
+            <ul id="displaySkillsBox">
+                
+            </ul>
                 
 
             
@@ -176,7 +176,7 @@
             let opt = {
                 margin:       1,
                 filename:     `${name}.pdf`,  // Set your custom file name here
-                image:        { type: 'jpeg', quality: 0.98 },
+                image:        { type: 'jpeg', quality: 1 },
                 html2canvas:  { scale: 2 },
                 jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
             };
