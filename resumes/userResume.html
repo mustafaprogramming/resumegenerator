@@ -49,15 +49,20 @@
                 </div>
             </div>
             <!-- summary -->
-            <h4>Professional Summary</h4>
+            <h4>Career Objective</h4>
             <hr>
             <p id="displaySummary" contenteditable="false">
                 
             </p>
+            
             <!-- Work Experience -->
-            <h4>Work History</h4>
+            <h4>Work Experience</h4>
             <hr>
             <div id="displayExperienceBox">
+                
+            </div>
+            <!-- Section -->
+            <div id="displaySectionBox">
                 
             </div>
             <!-- Education -->
@@ -116,6 +121,7 @@
          document.getElementById('displayLinkedin').innerHTML=resumeData.linkedin;
          document.getElementById('displaySummary').innerHTML=resumeData.summary;
          document.getElementById('displayEducationBox').innerHTML=resumeData.education;
+         document.getElementById('displaySectionBox').innerHTML=resumeData.sections;
          document.getElementById('displayExperienceBox').innerHTML=resumeData.experience;
          document.getElementById('displaySkillsBox').innerHTML=resumeData.skills;
          mainColor(resumeData.mainColor);
@@ -137,6 +143,7 @@
             document.querySelectorAll('.defiendInputNameAndPlace > span').forEach((ele)=>{
                 ele.style.color=color;
             });
+    
             document.getElementById('displayStatus').style.color=color;
             document.getElementById('displaySummary').style.color=color;
         }

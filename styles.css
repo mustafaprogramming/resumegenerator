@@ -285,7 +285,7 @@ header{
   background-color: #ff5a5a;
   position: absolute;
   padding: 0px 10px;
-  top: 2%;
+  top: 2px;
   right: 0%;
   z-index: 10;
 }
@@ -305,6 +305,11 @@ header{
   border: 1px solid #ccc;
   border-radius: 10px;
   padding: 10px 15px;
+}
+.SectionPointBox > .definedInput{
+  display: grid;
+  grid-template-columns: 25% 73%;
+  gap: 10px;
 }
 /* custom entry styling */
 .customeEntry{
@@ -378,7 +383,12 @@ header{
   background-color: #000000;
   color: #f1f1f1;
 }
-
+.infoDetailBox{
+  display: grid;
+  grid-template-columns: 25% 1% 74%;
+  gap: 10px;
+  color: #000000;
+}
 ul{
   margin: 5px 0 0 30px;
   font-size: 0.8rem;
@@ -392,7 +402,7 @@ ul{
     font-style: italic;
     span{
       color: #0085DD;
-      font-size: 0.6rem;
+      font-size: 0.7rem;
     }
   }
   

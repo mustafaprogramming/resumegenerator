@@ -12,6 +12,7 @@ type resumeObj ={
     summary:string,
     education:string,
     experience:string,
+    sections:string,
     mainColor:string;
     secondaryColor:string;
     accentColor:string;
@@ -37,6 +38,7 @@ const displayStatus=(document.getElementById('displayStatus') as HTMLParagraphEl
 const displaySkills=(document.getElementById('displaySkillsBox') as HTMLParagraphElement);
 const summary=(document.getElementById('displaySummary') as HTMLParagraphElement);
 const displayEducationBox=(document.getElementById('displayEducationBox') as HTMLDivElement);
+const displaySectionBox=(document.getElementById('displaySectionBox') as HTMLDivElement);
 const displayExperienceBox=(document.getElementById('displayExperienceBox') as HTMLDivElement);
 const formHeading=(document.getElementById('formHeading') as HTMLHeadingElement)
 const mainColorInput=(document.getElementById('mainColor')as HTMLInputElement);
@@ -187,9 +189,25 @@ function setInputForm(){
                         </div>
                     </section>
                 </div>`;
-    (document.getElementById('skillBox') as HTMLDivElement).innerHTML=`<div class="definedInput">
-                    <input placeholder="Enter Skill" type="text" required>
-                </div>`;
+    (document.getElementById('Section-box') as HTMLDivElement).innerHTML=`<div class="definedInput">
+                    <span>Enter your Section Heading</span>
+                    <input type="text" >
+                    <span>Enter your Section Details</span>
+                    <div>
+                        <h5>Section Details<button class="addBtn Btn" id="addSectionPointBtn"
+                        onclick="(()=>makeSectionPoint('SectionPointBox'))()"  
+                        type="button">+</button></h5>
+                    </div>
+                    <section class="SectionPointBox" id="SectionPointBox">
+                        <div class="definedInput">
+                            <input placeholder="Info" type="text" >
+                            <input placeholder="Enter Section Discription" type="text" >
+                        </div>
+                    </section>
+    </div>`;
+(document.getElementById('skillBox') as HTMLDivElement).innerHTML=`<div class="definedInput">
+                <input placeholder="Enter Skill" type="text" required>
+</div>`;
 }
 //Getting new form layout for the selected form
 function getResumeForm(resumeName:string){
@@ -221,6 +239,7 @@ function settingForm(resumeData:resumeObj){
     summary.innerHTML=resumeData.summary;
     displayEducationBox.innerHTML=resumeData.education;
     displayExperienceBox.innerHTML=resumeData.experience;
+    displaySectionBox.innerHTML=resumeData.sections;
     setColors(resumeData.mainColor,resumeData.secondaryColor,resumeData.accentColor)
     resetEdit()
 }
@@ -239,6 +258,7 @@ function makeUser(id:string){
         summary:summary.innerHTML,
         education:displayEducationBox.innerHTML,
         experience:displayExperienceBox.innerHTML,
+        sections:displaySectionBox.innerHTML,
         mainColor:mainColorInput.value,
         secondaryColor:secondryColorInput.value,
         accentColor:accentColorInput.value,
@@ -293,7 +313,6 @@ function populate(){
         div.innerHTML=`<p>${resumeName}</p>
                         <button onclick="(()=>{
                         let done=remove('${resumeName}');
-                        console.log(done)
                         if(!done)return;
                         clearStorage('${resumeName}');
                         })()"><i class="fa-solid fa-trash"></i></button>`;
@@ -309,6 +328,17 @@ function makeWorkPoint(pointsBox:string){
                         <button class="removeBtn Btn" type="button" onclick="(() => remove('removeWP${pointsBox+workPointsBox.children.length}'))()">-</button>`;
         workPointsBox.appendChild(div)
 }
+function makeSectionPoint(pointsBox:string){
+    const makeSectionBox = (document.getElementById(pointsBox) as HTMLDivElement);
+    let div=document.createElement('div');
+    div.id='removeSD'+pointsBox + makeSectionBox.children.length;
+    div.className="definedInput";
+    div.innerHTML= `
+                    <input placeholder="Info" type="text"  >
+                    <input placeholder="Enter Section Discription" type="text" >
+                    <button class="removeBtn Btn" type="button" onclick="(() => remove('removeSD${pointsBox+makeSectionBox.children.length}'))()">-</button>`;
+    makeSectionBox.appendChild(div)
+}
 //resetting edit 
 function resetEdit(){
     (document.getElementById('colorSetter') as HTMLFieldSetElement).style.display='none';
@@ -316,8 +346,7 @@ function resetEdit(){
     editBtn.style.display='block';
     pdfBtn.style.opacity='1';
     shareBtn.style.opacity='1';
-    resetBtn.style.opacity='1';
-    resetBtn.removeAttribute('disabled')
+    resetBtn.style.display='block';
     pdfBtn.removeAttribute('disabled')
     shareBtn.removeAttribute('disabled')
 }
@@ -452,6 +481,7 @@ resumeForm.addEventListener('submit', function(event) {
  const inputSkillsbox = (document.getElementById('skillBox') as HTMLDivElement);
  const educationBox = (document.getElementById('education-box') as HTMLDivElement);
  const experienceBox = (document.getElementById('experience-box') as HTMLDivElement);
+ const SectionBox = (document.getElementById('Section-box') as HTMLDivElement);
  displayFisrtName.innerHTML=inputFisrtName;
  displayLastName.innerHTML=inputLastName;
  displayEmail.innerHTML=inputEmail;
@@ -462,6 +492,7 @@ resumeForm.addEventListener('submit', function(event) {
  summary.innerHTML=inputsummary;
  let displayEducationDataArray:string[]=[]
  let displayExperienceDataArray:string[]=[]
+ let displaySectionDataArray:string[]=[]
  let skillArray:string[]=[]
  
 
@@ -488,30 +519,46 @@ resumeForm.addEventListener('submit', function(event) {
                                     </div>
                                    </div>`);
  }
+
+ for(let i=0;i<SectionBox.children.length;i++){
+  let SectionBoxHeading=(SectionBox.children[i].children[1] as HTMLInputElement).value;
+  let inputSectionDetails=(SectionBox.children[i].children[4] as HTMLDivElement);
+  let sectionBoxArray:string[]=[]
+  for(let i=0;i<inputSectionDetails.children.length;i++){
+    let info=(inputSectionDetails.children[i].children[0] as HTMLInputElement).value;
+    let detail=(inputSectionDetails.children[i].children[1] as HTMLInputElement).value;
+    sectionBoxArray.push(`<li><span class="infoDetailBox"><span>${info}</span><span>:</span><span>${detail}</span></span></li>`)
+ }
+ displaySectionDataArray.push(`<div class="displaydefinedInput">
+                                    <h4>${SectionBoxHeading}</h4>
+                                    <ul>${sectionBoxArray.join('')}</ul>
+                                </div>`);
+ }
  for(let i=0;i<experienceBox.children.length;i++){
-  let workStartDate=(experienceBox.children[i].children[1].children[0] as HTMLInputElement).value;
-  let workEndDate=(experienceBox.children[i].children[1].children[1] as HTMLInputElement).value;
-  let experienceBoxName=(experienceBox.children[i].children[3] as HTMLInputElement).value;
-  let experienceBoxPlace=(experienceBox.children[i].children[5] as HTMLInputElement).value;
-  let inputWorkPointbox=(experienceBox.children[i].children[8] as HTMLDivElement);
-  let workPointArray:string[]=[]
-  for(let i=0;i<inputWorkPointbox.children.length;i++){
-    let point=(inputWorkPointbox.children[i].children[0] as HTMLInputElement).value
-    workPointArray.push(`<li contenteditable="false"><span style="color:#000;">${point}</span></li>`)
- }
-  displayExperienceDataArray.push(`<div class="displaydefinedInput">
-                                    <div class="date" >
-                                        <span contenteditable="false">${workStartDate}</span>
-                                         &nbsp;-&nbsp;
-                                        <span contenteditable="false">${workEndDate}</span>
-                                    </div>
-                                    <div class="defiendInputNameAndPlace">
-                                        <span contenteditable="false">${experienceBoxName}</span>
-                                        <span contenteditable="false">${experienceBoxPlace}</span>
-                                    </div>
-                                    <ul>${workPointArray.join('')}<ul>
-                                   </div>`);
- }
+    let workStartDate=(experienceBox.children[i].children[1].children[0] as HTMLInputElement).value;
+    let workEndDate=(experienceBox.children[i].children[1].children[1] as HTMLInputElement).value;
+    let experienceBoxName=(experienceBox.children[i].children[3] as HTMLInputElement).value;
+    let experienceBoxPlace=(experienceBox.children[i].children[5] as HTMLInputElement).value;
+    let inputWorkPointbox=(experienceBox.children[i].children[8] as HTMLDivElement);
+    let workPointArray:string[]=[]
+    for(let i=0;i<inputWorkPointbox.children.length;i++){
+      let point=(inputWorkPointbox.children[i].children[0] as HTMLInputElement).value
+      workPointArray.push(`<li contenteditable="false"><span style="color:#000;">${point}</span></li>`)
+   }
+    displayExperienceDataArray.push(`<div class="displaydefinedInput">
+                                      <div class="date" >
+                                          <span contenteditable="false">${workStartDate}</span>
+                                           &nbsp;-&nbsp;
+                                          <span contenteditable="false">${workEndDate}</span>
+                                      </div>
+                                      <div class="defiendInputNameAndPlace">
+                                          <span contenteditable="false">${experienceBoxName}</span>
+                                          <span contenteditable="false">${experienceBoxPlace}</span>
+                                      </div>
+                                      <ul>${workPointArray.join('')}<ul>
+                                     </div>`);
+   }
+ displaySectionBox.innerHTML=displaySectionDataArray.join('');
  displayEducationBox.innerHTML=displayEducationDataArray.join('');
  displayExperienceBox.innerHTML=displayExperienceDataArray.join('');
  displaySkills.innerHTML=skillArray.join('');
@@ -534,47 +581,73 @@ resumeForm.addEventListener('submit', function(event) {
 });
 //making more Education feilds in input form dynamically
 (document.getElementById('addEducationBtn') as HTMLButtonElement).addEventListener('click',()=>{
- const educationBox = (document.getElementById('education-box') as HTMLDivElement);
-  let div=document.createElement('div');
-  div.id='removeEdu' + educationBox.children.length;
-  div.className="definedInput";
-  div.innerHTML= 
-        `<span>Enter Starting and ending date of your Education</span>
-                    <div class="date"><input type="text" required>&nbsp;<input type="text" required></div>
-                    <span>Enter your Education</span>
-                    <input type="text" required>
-                    <span>Enter place of Education</span>
-                    <input type="text" required>
-        <button class="removeBtn Btn" type="button" onclick="(() => remove('removeEdu'+${educationBox.children.length}))()">-</button>
-                `;
-  educationBox.appendChild(div)
-});
+    const educationBox = (document.getElementById('education-box') as HTMLDivElement);
+     let div=document.createElement('div');
+     div.id='removeEdu' + educationBox.children.length;
+     div.className="definedInput";
+     div.innerHTML= 
+           `<span>Enter Starting and ending date of your Education</span>
+                       <div class="date"><input type="text" required>&nbsp;<input type="text" required></div>
+                       <span>Enter your Education</span>
+                       <input type="text" required>
+                       <span>Enter place of Education</span>
+                       <input type="text" required>
+           <button class="removeBtn Btn" type="button" onclick="(() => remove('removeEdu'+${educationBox.children.length}))()">-</button>
+                   `;
+     educationBox.appendChild(div)
+   });
+
 //making more Experience feilds in input form dynamically addEntriesBtn
 (document.getElementById('addExperienceBtn') as HTMLButtonElement).addEventListener('click',()=>{
- const experienceBox = (document.getElementById('experience-box') as HTMLDivElement);
-  let div=document.createElement('div');
-  div.id='removeExp' + experienceBox.children.length;
-  div.className="definedInput";
-  div.innerHTML= `
-                  <span>Enter Starting and ending date of your Work</span>
-                    <div class="date"><input type="text" required>&nbsp;<input type="text" required></div>
-                    <span>Enter your Work</span>
-                    <input type="text" required>
-                    <span>Enter place of Work</span>
-                    <input type="text" required>
-                    <span>Enter your Work discription</span>
+    const experienceBox = (document.getElementById('experience-box') as HTMLDivElement);
+     let div=document.createElement('div');
+     div.id='removeExp' + experienceBox.children.length;
+     div.className="definedInput";
+     div.innerHTML= `
+                     <span>Enter Starting and ending date of your Work</span>
+                       <div class="date"><input type="text" required>&nbsp;<input type="text" required></div>
+                       <span>Enter your Work</span>
+                       <input type="text" required>
+                       <span>Enter place of Work</span>
+                       <input type="text" required>
+                       <span>Enter your Work discription</span>
+                       <div>
+                           <h5>Work Points<button class="addBtn Btn" onclick="(()=>makeWorkPoint('workPointBox${experienceBox.children.length}'))()" type="button">+</button></h5>
+                       </div>
+                       <section id="workPointBox${experienceBox.children.length}">
+                           <div class="definedInput">
+                               <input placeholder="Enter WorkPoint" type="text" required>
+                           </div>
+                       </section>
+                     <button class="removeBtn Btn" type="button" onclick="(() => remove('removeExp'+${experienceBox.children.length}))()">-</button>
+                   </div>`;
+      experienceBox.appendChild(div)
+   });
+//making more Section feilds in input form dynamically addEntriesBtn
+(document.getElementById('addSectionBtn') as HTMLButtonElement).addEventListener('click',()=>{
+    const sectionBox = (document.getElementById('Section-box') as HTMLDivElement);
+     let div=document.createElement('div');
+     div.id='removeSEC' + sectionBox.children.length;
+     div.className="definedInput";
+     div.innerHTML= `
+                    <span>Enter your Section Heading</span>
+                    <input type="text" >
+                    <span>Enter your Section Details</span>
                     <div>
-                        <h5>Work Points<button class="addBtn Btn" onclick="(()=>makeWorkPoint('workPointBox${experienceBox.children.length}'))()" type="button">+</button></h5>
+                        <h5>Section Details<button class="addBtn Btn" id="addSectionPointBtn"
+                        onclick="(()=>makeSectionPoint('SectionPointBox${sectionBox.children.length}'))()"  
+                        type="button">+</button></h5>
                     </div>
-                    <section id="workPointBox${experienceBox.children.length}">
+                    <section class="SectionPointBox" id="SectionPointBox${sectionBox.children.length}">
                         <div class="definedInput">
-                            <input placeholder="Enter WorkPoint" type="text" required>
+                            <input placeholder="Info" type="text" >
+                            <input placeholder="Enter Section Discription" type="text" >
                         </div>
                     </section>
-                  <button class="removeBtn Btn" type="button" onclick="(() => remove('removeExp'+${experienceBox.children.length}))()">-</button>
-                </div>`;
-   experienceBox.appendChild(div)
-});
+                     <button class="removeBtn Btn" type="button" onclick="(() => remove('removeSEC'+${sectionBox.children.length}))()">-</button>
+                   </div>`;
+      sectionBox.appendChild(div)
+   });
 //making skill on click
 (document.getElementById('addSkillsBtn') as HTMLButtonElement).addEventListener('click',()=>{
     const skillBox = (document.getElementById('skillBox') as HTMLDivElement);
@@ -608,8 +681,7 @@ editBtn.addEventListener('click',()=>{
     editBtn.style.display='none';
     pdfBtn.style.opacity='0.5';
     shareBtn.style.opacity='0.5';
-    resetBtn.style.opacity='0.5';
-    resetBtn.setAttribute('disabled','true');
+    resetBtn.style.display='none';
     pdfBtn.setAttribute('disabled','true');
     shareBtn.setAttribute('disabled','true');
     (document.getElementById('shareLinkBox') as HTMLDivElement).style.display='none';

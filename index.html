@@ -62,8 +62,14 @@
             <!-- summary -->
             <label for="resume-summary">Summary</label>
             <textarea id="resume-summary" name="resume-summary"  placeholder="Tell about Yourself" required></textarea>
+            <!-- Random Section -->
+            <div >
+                <h4>Section (Optional) <button class="addBtn Btn" id="addSectionBtn" type="button">+</button></h4>
+            </div>
+            <section id="Section-box">
+            </section>
             <!-- Education -->
-            <div>
+            <div style="margin-top: 10px;">
                 <h4>Education <button class="addBtn Btn" id="addEducationBtn" type="button">+</button></h4>
             </div>
             <section id="education-box">
@@ -71,13 +77,10 @@
             </section>
 
             <!-- Work Experience -->
-             <div style="margin-top: 10px;">
-                 <h4>Experience <button class="addBtn Btn" id="addExperienceBtn" type="button">+</button></h4>
-                 
-             </div>
+            <div style="margin-top: 10px;">
+                <h4>Experience <button class="addBtn Btn" id="addExperienceBtn" type="button">+</button></h4>
+            </div>
             <section id="experience-box">
-                
-                
             </section>
 
             <!-- Submit Button -->
@@ -123,10 +126,15 @@
             <p id="displaySummary" contenteditable="false">
                 
             </p>
+            
             <!-- Work Experience -->
             <h4>Work Experience</h4>
             <hr>
             <div id="displayExperienceBox">
+                
+            </div>
+            <!-- Sections -->
+            <div id="displaySectionBox">
                 
             </div>
             <!-- Education -->
